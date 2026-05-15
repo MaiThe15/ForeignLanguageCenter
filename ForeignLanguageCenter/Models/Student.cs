@@ -8,9 +8,9 @@ namespace ForeignLanguageCenter.Models
 {
     internal class Student
     {
-        public int MaHV { get; set; }
-        public string TenHV { get; set; }
-        public string SoDienThoai { get; set; }
-        public string TrangThai { get; set; }
+        public int StudentID { get; set; }
+        public string FullName { get; set; }
+        public string PhoneNumber { get; set; }
+        public string Status { get; set; }
     }
 }

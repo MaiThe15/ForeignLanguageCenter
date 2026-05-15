@@ -22,7 +22,7 @@ namespace ForeignLanguageCenter.BLL
         /// </summary>
         public DataTable GetAllStudents()
         {
-            string query = "SELECT MaHV AS [Mã HV], TenHV AS [Họ và Tên], SoDienThoai AS [SĐT], TrangThai AS [Trạng Thái] FROM HocVien";
+            string query = "SELECT StudentID AS [StudentID], FullName AS [FullName], PhoneNumber AS [PhoneNumber], Status AS [Status] FROM Students";
             return db.ExecuteQuery(query);
         }
 

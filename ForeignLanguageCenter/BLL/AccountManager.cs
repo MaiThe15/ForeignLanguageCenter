@@ -22,7 +22,7 @@ namespace ForeignLanguageCenter.BLL
                 {
                     conn.Open();
                     // Dùng tham số hóa để chống SQL Injection
-                    string query = "SELECT Username, Role FROM TaiKhoan WHERE Username = @user AND Password = @pass";
+                    string query = "SELECT Username, Role FROM Accounts WHERE Username = @user AND Password = @pass";
                     SqlCommand cmd = new SqlCommand(query, conn);
                     cmd.Parameters.AddWithValue("@user", username);
                     cmd.Parameters.AddWithValue("@pass", password);
