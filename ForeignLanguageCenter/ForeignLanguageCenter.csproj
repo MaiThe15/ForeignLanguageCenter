@@ -50,6 +50,18 @@
     <Compile Include="BLL\AccountManager.cs" />
     <Compile Include="BLL\StudentManager.cs" />
     <Compile Include="DAL\DatabaseConnection.cs" />
+    <Compile Include="Models\frmCourse.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Models\frmCourse.Designer.cs">
+      <DependentUpon>frmCourse.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\frmStudent.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Models\frmStudent.Designer.cs">
+      <DependentUpon>frmStudent.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -68,6 +80,12 @@
     <Compile Include="Models\Transaction.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Models\frmCourse.resx">
+      <DependentUpon>frmCourse.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\frmStudent.resx">
+      <DependentUpon>frmStudent.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </EmbeddedResource>

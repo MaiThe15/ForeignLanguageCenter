@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ForeignLanguageCenter.BLL;
+using ForeignLanguageCenter.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,7 +9,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using ForeignLanguageCenter.BLL;
 
 namespace ForeignLanguageCenter
 {
@@ -58,5 +59,28 @@ namespace ForeignLanguageCenter
                 // Admin thì có toàn quyền, không cần ẩn/khóa gì cả
             }
         }
+
+        private void dgvHocVien_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnCourse_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnStudent_Click(object sender, EventArgs e)
+        {
+            frmStudent fStudent = new frmStudent();
+            this.Hide();
+            fStudent.Show();
+        }
+    }
     }
 }
