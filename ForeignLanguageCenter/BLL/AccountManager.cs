@@ -42,7 +42,7 @@ namespace ForeignLanguageCenter.BLL
             }
             catch (Exception ex)
             {
-                throw new Exception("Lỗi xử lý đăng nhập: " + ex.Message);
+                throw new Exception("Login processing error: " + ex.Message);
             }
             return loggedInUser;
         }
