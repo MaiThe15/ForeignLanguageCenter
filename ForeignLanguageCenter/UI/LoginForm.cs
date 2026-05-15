@@ -31,7 +31,7 @@ namespace ForeignLanguageCenter.UI
             // Kiểm tra dữ liệu đầu vào (yêu cầu bắt buộc của đề bài)
             if (string.IsNullOrEmpty(user) || string.IsNullOrEmpty(pass))
             {
-                MessageBox.Show("Vui lòng nhập đầy đủ Tên đăng nhập và Mật khẩu!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Please fill Username and Password!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -40,7 +40,7 @@ namespace ForeignLanguageCenter.UI
 
             if (acc != null)
             {
-                MessageBox.Show($"Đăng nhập thành công! Chào mừng {acc.Username} ({acc.Role})", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show($"Login success! Welcome {acc.Username} ({acc.Role})", "Announcement", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 // Truyền quyền (Role) sang MainForm
                 MainForm main = new MainForm(acc.Role);
@@ -50,7 +50,7 @@ namespace ForeignLanguageCenter.UI
             }
             else
             {
-                MessageBox.Show("Sai tên đăng nhập hoặc mật khẩu!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Incorrect email or password!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

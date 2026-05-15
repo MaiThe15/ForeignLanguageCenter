@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BLL\AccountManager.cs" />
+    <Compile Include="BLL\CourseManager.cs" />
     <Compile Include="BLL\StudentManager.cs" />
     <Compile Include="DAL\DatabaseConnection.cs" />
     <Compile Include="Models\frmCourse.cs">

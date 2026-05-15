@@ -102,6 +102,13 @@
             // 
             // btnCourse
             // 
+            this.dgvHocVien.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvHocVien.Location = new System.Drawing.Point(101, 241);
+            this.dgvHocVien.Name = "dgvHocVien";
+            this.dgvHocVien.RowHeadersWidth = 62;
+            this.dgvHocVien.RowTemplate.Height = 28;
+            this.dgvHocVien.Size = new System.Drawing.Size(621, 150);
+            this.dgvHocVien.TabIndex = 0;
             this.btnCourse.Location = new System.Drawing.Point(167, 0);
             this.btnCourse.Name = "btnCourse";
             this.btnCourse.Size = new System.Drawing.Size(135, 50);
