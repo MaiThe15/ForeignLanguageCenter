@@ -59,5 +59,40 @@ namespace ForeignLanguageCenter.BLL
                 cmd.ExecuteNonQuery();
             }
         }
+
+        public DataTable SearchCourses(string id, string name , string fee)
+        {
+            DataTable dt = GetAllCourses();
+
+            string filter = "";
+
+            if (!string.IsNullOrEmpty(id) && int.TryParse(id, out int CourseID))
+            {
+                filter += $"CourseID = {CourseID}";
+            }
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                if (filter != "")
+                    filter += " AND ";
+                filter += $"CourseName LIKE '%{name}%'";
+            }
+
+            if (!string.IsNullOrEmpty(fee) && decimal.TryParse(fee, out decimal tuitionFee))
+            {
+                if (filter != "")
+                    filter += " AND ";
+                filter += $"TuitionFee = {tuitionFee}";
+            }
+
+            DataView dv = dt.DefaultView;
+
+            if (!string.IsNullOrEmpty(filter))
+            {
+                dv.RowFilter = filter;
+            }
+
+            return dv.ToTable();
+        }
     }
 }

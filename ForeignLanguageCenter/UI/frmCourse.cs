@@ -139,5 +139,10 @@ namespace ForeignLanguageCenter.Models
                 MessageBox.Show("Lỗi: " + ex.Message);
             }
         }
+
+        private void Search_Course_Click(object sender, EventArgs e)
+        {
+            dgvCourse.DataSource = courseBLL.SearchCourses(txtCourseID.Text, txtCourseName.Text, txtTuitionFee.Text);
+        }
     }
 }

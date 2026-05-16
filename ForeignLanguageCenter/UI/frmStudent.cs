@@ -164,5 +164,9 @@ namespace ForeignLanguageCenter.Models
             }
         }
 
+        private void Search_Student_Click(object sender, EventArgs e)
+        {
+            dgvStudent.DataSource = studentBLL.SearchStudents(txtStudentID.Text, txtFullName.Text, txtPhone.Text, txtStatus.Text);
+        }
     }
 }

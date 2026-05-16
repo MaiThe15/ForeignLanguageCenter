@@ -70,7 +70,54 @@ namespace ForeignLanguageCenter.BLL
             }
         }
 
+        public DataTable SearchStudents(string id, string name, string phone, string status)
+        {
+            DataTable dt = GetAllStudents();
+
+            string filter = "";
+
+            // Tìm theo StudentID
+            if (!string.IsNullOrEmpty(id) && int.TryParse(id, out int studentId))
+            {
+                    filter += $"StudentID = {studentId}";
+            }
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                if (filter != "")
+                    filter += " AND ";
+
+                filter += $"FullName LIKE '%{name}%'";
+            }
+
+            // Tìm theo PhoneNumber
+            if (!string.IsNullOrEmpty(phone))
+            {
+                if (filter != "")
+                    filter += " AND ";
+
+                filter += $"PhoneNumber LIKE '%{phone}%'";
+            }
+
+            // Tìm theo Status
+            if (!string.IsNullOrEmpty(status))
+            {
+                if (filter != "")
+                    filter += " AND ";
+
+                filter += $"Status = {status}";
+            }
+
+            DataView dv = dt.DefaultView;
+
+
+            if (!string.IsNullOrEmpty(filter))
+            {
+                dv.RowFilter = filter;
+            }
+
+            return dv.ToTable();
+        }
+
     }
-
-
 }
