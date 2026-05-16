@@ -147,6 +147,7 @@ namespace ForeignLanguageCenter
             this.tranSactionsToolStripMenuItem.Name = "tranSactionsToolStripMenuItem";
             this.tranSactionsToolStripMenuItem.Size = new System.Drawing.Size(106, 24);
             this.tranSactionsToolStripMenuItem.Text = "TranSactions";
+            this.tranSactionsToolStripMenuItem.Click += new System.EventHandler(this.tranSactionsToolStripMenuItem_Click);
             // 
             // financeToolStripMenuItem
             // 

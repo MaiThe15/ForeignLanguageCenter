@@ -64,7 +64,7 @@ namespace ForeignLanguageCenter
 
         private void courseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmCourse fCourse = new frmCourse();
+            CourseManagerment fCourse = new CourseManagerment();
             fCourse.ShowDialog(); // ✅ tương tự
         }
 
@@ -74,6 +74,11 @@ namespace ForeignLanguageCenter
             this.Hide();
             login.ShowDialog();
             this.Close();
+        }
+
+        private void tranSactionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

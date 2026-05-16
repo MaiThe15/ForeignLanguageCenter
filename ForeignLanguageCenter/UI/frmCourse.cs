@@ -12,10 +12,10 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 namespace ForeignLanguageCenter.Models
 {
-    public partial class frmCourse : Form
+    public partial class CourseManagerment : Form
     {
         CourseManager courseBLL = new CourseManager();
-        public frmCourse()
+        public CourseManagerment()
         {
             InitializeComponent();
         }
@@ -23,6 +23,10 @@ namespace ForeignLanguageCenter.Models
         private void frmCourse_Load(object sender, EventArgs e)
         {
             LoadData();
+
+            dgvCourseCart.Columns.Add("CourseID", "Course ID");
+            dgvCourseCart.Columns.Add("CourseName", "Course Name");
+            dgvCourseCart.Columns.Add("TuitionFee", "Tuition Fee");
         }
         private void LoadData()
         {
@@ -143,6 +147,76 @@ namespace ForeignLanguageCenter.Models
         private void Search_Course_Click(object sender, EventArgs e)
         {
             dgvCourse.DataSource = courseBLL.SearchCourses(txtCourseID.Text, txtCourseName.Text, txtTuitionFee.Text);
+        }
+
+        private void btnAddCourse_Click(object sender, EventArgs e)
+        {
+            if (dgvCourse.CurrentRow == null)
+            {
+                MessageBox.Show("Please select a course!");
+                return;
+            }
+
+            int courseID = Convert.ToInt32(dgvCourse.CurrentRow.Cells["CourseID"].Value);
+            string courseName = dgvCourse.CurrentRow.Cells["CourseName"].Value.ToString();
+            decimal tuitionFee = Convert.ToDecimal(dgvCourse.CurrentRow.Cells["TuitionFee"].Value);
+
+            foreach (DataGridViewRow row in dgvCourseCart.Rows)
+            {
+                if (row.Cells["CourseID"].Value != null &&
+                    Convert.ToInt32(row.Cells["CourseID"].Value) == courseID)
+                {
+                    MessageBox.Show("Course already added!");
+                    return;
+                }
+            }
+
+            dgvCourseCart.Rows.Add(courseID, courseName, tuitionFee);
+        }
+
+        private void btnDeleteCourse_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (dgvCourseCart.CurrentRow != null)
+                {
+                    dgvCourseCart.Rows.Remove(dgvCourseCart.CurrentRow);
+                }
+        }
+            catch
+            {
+                MessageBox.Show("Chọn khóa học cần xóa");
+            }
+
+}
+        private void Payment_Click(object sender, EventArgs e)
+        {
+            decimal total = 0;
+
+            foreach (DataGridViewRow row in dgvCourseCart.Rows)
+            {
+                total += Convert.ToDecimal(row.Cells["TuitionFee"].Value);
+            }
+
+            DialogResult result = MessageBox.Show(
+                "Total payment: " + total.ToString("N0") + " VND\n\nDo you want to continue?",
+                "Payment Confirmation",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question
+            );
+
+            if (result == DialogResult.Yes)
+            {
+                MessageBox.Show(
+                    "Payment successful!",
+                    "Success",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information
+                );
+
+                dgvCourseCart.Rows.Clear();
+            }
+
         }
     }
 }

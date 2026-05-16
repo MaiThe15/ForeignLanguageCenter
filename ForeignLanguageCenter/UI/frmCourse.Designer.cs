@@ -1,6 +1,6 @@
 ﻿namespace ForeignLanguageCenter.Models
 {
-    partial class frmCourse
+    partial class CourseManagerment
     {
         /// <summary>
         /// Required designer variable.
@@ -40,10 +40,15 @@
             this.btnUpdate = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnClear = new System.Windows.Forms.Button();
-            this.dgvCourse = new System.Windows.Forms.DataGridView();
             this.Search_Course = new System.Windows.Forms.Button();
+            this.dgvCourse = new System.Windows.Forms.DataGridView();
+            this.dgvCourseCart = new System.Windows.Forms.DataGridView();
+            this.btnAddCourse = new System.Windows.Forms.Button();
+            this.Payment = new System.Windows.Forms.Button();
+            this.btnDeleteCourse = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCourse)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCourseCart)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -58,7 +63,7 @@
             this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox1.Size = new System.Drawing.Size(440, 169);
+            this.groupBox1.Size = new System.Drawing.Size(402, 169);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Course Information";
@@ -119,10 +124,10 @@
             // 
             // btnBack
             // 
-            this.btnBack.Location = new System.Drawing.Point(467, 42);
+            this.btnBack.Location = new System.Drawing.Point(836, 24);
             this.btnBack.Margin = new System.Windows.Forms.Padding(2);
             this.btnBack.Name = "btnBack";
-            this.btnBack.Size = new System.Drawing.Size(65, 21);
+            this.btnBack.Size = new System.Drawing.Size(65, 33);
             this.btnBack.TabIndex = 1;
             this.btnBack.Text = "Back";
             this.btnBack.UseVisualStyleBackColor = true;
@@ -130,10 +135,10 @@
             // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(31, 193);
+            this.btnAdd.Location = new System.Drawing.Point(11, 193);
             this.btnAdd.Margin = new System.Windows.Forms.Padding(2);
             this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(65, 20);
+            this.btnAdd.Size = new System.Drawing.Size(65, 27);
             this.btnAdd.TabIndex = 2;
             this.btnAdd.Text = "Add";
             this.btnAdd.UseVisualStyleBackColor = true;
@@ -141,10 +146,10 @@
             // 
             // btnUpdate
             // 
-            this.btnUpdate.Location = new System.Drawing.Point(111, 193);
+            this.btnUpdate.Location = new System.Drawing.Point(89, 193);
             this.btnUpdate.Margin = new System.Windows.Forms.Padding(2);
             this.btnUpdate.Name = "btnUpdate";
-            this.btnUpdate.Size = new System.Drawing.Size(73, 20);
+            this.btnUpdate.Size = new System.Drawing.Size(73, 27);
             this.btnUpdate.TabIndex = 3;
             this.btnUpdate.Text = "Update";
             this.btnUpdate.UseVisualStyleBackColor = true;
@@ -152,10 +157,10 @@
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(201, 193);
+            this.btnDelete.Location = new System.Drawing.Point(169, 193);
             this.btnDelete.Margin = new System.Windows.Forms.Padding(2);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(69, 20);
+            this.btnDelete.Size = new System.Drawing.Size(69, 27);
             this.btnDelete.TabIndex = 4;
             this.btnDelete.Text = "Delete";
             this.btnDelete.UseVisualStyleBackColor = true;
@@ -163,46 +168,88 @@
             // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(286, 193);
+            this.btnClear.Location = new System.Drawing.Point(254, 193);
             this.btnClear.Margin = new System.Windows.Forms.Padding(2);
             this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(73, 20);
+            this.btnClear.Size = new System.Drawing.Size(73, 27);
             this.btnClear.TabIndex = 5;
             this.btnClear.Text = "Clear";
             this.btnClear.UseVisualStyleBackColor = true;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
-            // dgvCourse
-            // 
-            this.dgvCourse.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvCourse.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.dgvCourse.Location = new System.Drawing.Point(0, 241);
-            this.dgvCourse.Margin = new System.Windows.Forms.Padding(2);
-            this.dgvCourse.Name = "dgvCourse";
-            this.dgvCourse.RowHeadersWidth = 82;
-            this.dgvCourse.RowTemplate.Height = 33;
-            this.dgvCourse.Size = new System.Drawing.Size(677, 158);
-            this.dgvCourse.TabIndex = 6;
-            this.dgvCourse.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCourse_CellContentClick);
-            // 
             // Search_Course
             // 
-            this.Search_Course.Location = new System.Drawing.Point(375, 193);
+            this.Search_Course.Location = new System.Drawing.Point(347, 193);
             this.Search_Course.Margin = new System.Windows.Forms.Padding(2);
             this.Search_Course.Name = "Search_Course";
-            this.Search_Course.Size = new System.Drawing.Size(73, 20);
+            this.Search_Course.Size = new System.Drawing.Size(73, 27);
             this.Search_Course.TabIndex = 7;
             this.Search_Course.Text = "Search";
             this.Search_Course.UseVisualStyleBackColor = true;
             this.Search_Course.Click += new System.EventHandler(this.Search_Course_Click);
             // 
-            // frmCourse
+            // dgvCourse
+            // 
+            this.dgvCourse.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvCourse.Location = new System.Drawing.Point(8, 259);
+            this.dgvCourse.Name = "dgvCourse";
+            this.dgvCourse.RowHeadersWidth = 51;
+            this.dgvCourse.RowTemplate.Height = 24;
+            this.dgvCourse.Size = new System.Drawing.Size(468, 177);
+            this.dgvCourse.TabIndex = 8;
+            // 
+            // dgvCourseCart
+            // 
+            this.dgvCourseCart.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvCourseCart.Location = new System.Drawing.Point(434, 12);
+            this.dgvCourseCart.Name = "dgvCourseCart";
+            this.dgvCourseCart.RowHeadersWidth = 51;
+            this.dgvCourseCart.RowTemplate.Height = 24;
+            this.dgvCourseCart.Size = new System.Drawing.Size(397, 208);
+            this.dgvCourseCart.TabIndex = 9;
+            // 
+            // btnAddCourse
+            // 
+            this.btnAddCourse.Location = new System.Drawing.Point(528, 259);
+            this.btnAddCourse.Name = "btnAddCourse";
+            this.btnAddCourse.Size = new System.Drawing.Size(137, 46);
+            this.btnAddCourse.TabIndex = 10;
+            this.btnAddCourse.Text = "Add course";
+            this.btnAddCourse.UseVisualStyleBackColor = true;
+            this.btnAddCourse.Click += new System.EventHandler(this.btnAddCourse_Click);
+            // 
+            // Payment
+            // 
+            this.Payment.Location = new System.Drawing.Point(528, 346);
+            this.Payment.Name = "Payment";
+            this.Payment.Size = new System.Drawing.Size(137, 46);
+            this.Payment.TabIndex = 11;
+            this.Payment.Text = "Payment";
+            this.Payment.UseVisualStyleBackColor = true;
+            this.Payment.Click += new System.EventHandler(this.Payment_Click);
+            // 
+            // btnDeleteCourse
+            // 
+            this.btnDeleteCourse.Location = new System.Drawing.Point(686, 259);
+            this.btnDeleteCourse.Margin = new System.Windows.Forms.Padding(2);
+            this.btnDeleteCourse.Name = "btnDeleteCourse";
+            this.btnDeleteCourse.Size = new System.Drawing.Size(128, 46);
+            this.btnDeleteCourse.TabIndex = 12;
+            this.btnDeleteCourse.Text = "Delete course";
+            this.btnDeleteCourse.UseVisualStyleBackColor = true;
+            this.btnDeleteCourse.Click += new System.EventHandler(this.btnDeleteCourse_Click);
+            // 
+            // CourseManagerment
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(677, 399);
-            this.Controls.Add(this.Search_Course);
+            this.ClientSize = new System.Drawing.Size(906, 468);
+            this.Controls.Add(this.btnDeleteCourse);
+            this.Controls.Add(this.Payment);
+            this.Controls.Add(this.btnAddCourse);
+            this.Controls.Add(this.dgvCourseCart);
             this.Controls.Add(this.dgvCourse);
+            this.Controls.Add(this.Search_Course);
             this.Controls.Add(this.btnClear);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnUpdate);
@@ -210,12 +257,13 @@
             this.Controls.Add(this.btnBack);
             this.Controls.Add(this.groupBox1);
             this.Margin = new System.Windows.Forms.Padding(2);
-            this.Name = "frmCourse";
+            this.Name = "CourseManagerment";
             this.Text = "Course Management";
             this.Load += new System.EventHandler(this.frmCourse_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCourse)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCourseCart)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -231,10 +279,14 @@
         private System.Windows.Forms.Button btnUpdate;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnClear;
-        private System.Windows.Forms.DataGridView dgvCourse;
         private System.Windows.Forms.TextBox txtTuitionFee;
         private System.Windows.Forms.TextBox txtCourseName;
         private System.Windows.Forms.TextBox txtCourseID;
         private System.Windows.Forms.Button Search_Course;
+        private System.Windows.Forms.DataGridView dgvCourse;
+        private System.Windows.Forms.DataGridView dgvCourseCart;
+        private System.Windows.Forms.Button btnAddCourse;
+        private System.Windows.Forms.Button Payment;
+        private System.Windows.Forms.Button btnDeleteCourse;
     }
 }
