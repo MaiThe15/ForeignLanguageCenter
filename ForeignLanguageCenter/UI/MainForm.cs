@@ -1,5 +1,6 @@
 ﻿using ForeignLanguageCenter.BLL;
 using ForeignLanguageCenter.Models;
+using ForeignLanguageCenter.UI;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -66,5 +67,13 @@ namespace ForeignLanguageCenter
             frmCourse fCourse = new frmCourse();
             fCourse.ShowDialog(); // ✅ tương tự
         }
+
+        private void LogOut_Click(object sender, EventArgs e)
+        {
+            LoginForm login = new LoginForm();
+            this.Hide();
+            login.ShowDialog();
+            this.Close();
+        }
     }
-    }
+}
