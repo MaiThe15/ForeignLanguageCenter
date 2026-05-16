@@ -55,17 +55,16 @@ namespace ForeignLanguageCenter
         {
 
         }
-
-        private void btnCourse_Click(object sender, EventArgs e)
-        {
-            frmCourse fCourse = new frmCourse();
-            fCourse.ShowDialog(); // ✅ tương tự
-        }
-
-        private void btnStudent_Click(object sender, EventArgs e)
+        private void studentToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmStudent fStudent = new frmStudent();
             fStudent.ShowDialog(); // ✅ MainForm vẫn
+        }
+
+        private void courseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmCourse fCourse = new frmCourse();
+            fCourse.ShowDialog(); // ✅ tương tự
         }
     }
     }
