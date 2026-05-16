@@ -1,4 +1,6 @@
-﻿namespace ForeignLanguageCenter
+﻿using System;
+
+namespace ForeignLanguageCenter
 {
     partial class MainForm
     {
@@ -20,6 +22,11 @@
             base.Dispose(disposing);
         }
 
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            ApplyAuthorization(); // giữ lại dòng này
+        }
+
         #region Windows Form Designer generated code
 
         /// <summary>
@@ -33,11 +40,11 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.btnStudent = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.btnCourse = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.btnStudent = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -55,9 +62,9 @@
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(462, 22);
+            this.button6.Location = new System.Drawing.Point(476, 17);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(100, 31);
+            this.button6.Size = new System.Drawing.Size(108, 41);
             this.button6.TabIndex = 3;
             this.button6.Text = "Enter";
             this.button6.UseVisualStyleBackColor = true;
@@ -91,6 +98,16 @@
             this.panel2.Size = new System.Drawing.Size(1067, 50);
             this.panel2.TabIndex = 2;
             // 
+            // btnStudent
+            // 
+            this.btnStudent.Location = new System.Drawing.Point(26, 0);
+            this.btnStudent.Name = "btnStudent";
+            this.btnStudent.Size = new System.Drawing.Size(135, 50);
+            this.btnStudent.TabIndex = 3;
+            this.btnStudent.Text = "Student";
+            this.btnStudent.UseVisualStyleBackColor = true;
+            this.btnStudent.Click += new System.EventHandler(this.btnStudent_Click);
+            // 
             // button5
             // 
             this.button5.Location = new System.Drawing.Point(462, 0);
@@ -102,13 +119,6 @@
             // 
             // btnCourse
             // 
-            this.dgvHocVien.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvHocVien.Location = new System.Drawing.Point(101, 241);
-            this.dgvHocVien.Name = "dgvHocVien";
-            this.dgvHocVien.RowHeadersWidth = 62;
-            this.dgvHocVien.RowTemplate.Height = 28;
-            this.dgvHocVien.Size = new System.Drawing.Size(621, 150);
-            this.dgvHocVien.TabIndex = 0;
             this.btnCourse.Location = new System.Drawing.Point(167, 0);
             this.btnCourse.Name = "btnCourse";
             this.btnCourse.Size = new System.Drawing.Size(135, 50);
@@ -135,16 +145,6 @@
             this.menuStrip1.Size = new System.Drawing.Size(1067, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
-            // 
-            // btnStudent
-            // 
-            this.btnStudent.Location = new System.Drawing.Point(26, 0);
-            this.btnStudent.Name = "btnStudent";
-            this.btnStudent.Size = new System.Drawing.Size(135, 50);
-            this.btnStudent.TabIndex = 3;
-            this.btnStudent.Text = "Student";
-            this.btnStudent.UseVisualStyleBackColor = true;
-            this.btnStudent.Click += new System.EventHandler(this.btnStudent_Click);
             // 
             // MainForm
             // 

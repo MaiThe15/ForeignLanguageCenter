@@ -51,16 +51,16 @@
     <Compile Include="BLL\CourseManager.cs" />
     <Compile Include="BLL\StudentManager.cs" />
     <Compile Include="DAL\DatabaseConnection.cs" />
-    <Compile Include="Models\frmCourse.cs">
+    <Compile Include="UI\frmCourse.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Models\frmCourse.Designer.cs">
+    <Compile Include="UI\frmCourse.Designer.cs">
       <DependentUpon>frmCourse.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\frmStudent.cs">
+    <Compile Include="UI\frmStudent.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Models\frmStudent.Designer.cs">
+    <Compile Include="UI\frmStudent.Designer.cs">
       <DependentUpon>frmStudent.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\LoginForm.cs">
@@ -81,10 +81,10 @@
     <Compile Include="Models\Transaction.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Models\frmCourse.resx">
+    <EmbeddedResource Include="UI\frmCourse.resx">
       <DependentUpon>frmCourse.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Models\frmStudent.resx">
+    <EmbeddedResource Include="UI\frmStudent.resx">
       <DependentUpon>frmStudent.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\LoginForm.resx">

@@ -15,15 +15,11 @@ namespace ForeignLanguageCenter
     public partial class MainForm : Form
     {
         private StudentManager studentManager;
-       
-        private void LoadStudentData()
-        {
-            // Giao diện (UI) chỉ gọi tầng Logic (BLL), không dính dáng đến câu lệnh SQL
-            dgvHocVien.DataSource = studentManager.GetAllStudents();
-        }
+
 
         // Phần phân quyền sẽ được thêm vào đây
         private string currentUserRole; // Biến lưu trữ quyền của người đang đăng nhập
+       
 
         // Sửa hàm tạo (Constructor) để nhận biến role
         public MainForm(string role)
@@ -31,12 +27,6 @@ namespace ForeignLanguageCenter
             InitializeComponent();
             currentUserRole = role;
             studentManager = new StudentManager();
-        }
-
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-            ApplyAuthorization(); // Gọi hàm phân quyền khi form vừa load lên
-            LoadStudentData();
         }
 
         // Hàm xử lý phân quyền
@@ -60,10 +50,6 @@ namespace ForeignLanguageCenter
             }
         }
 
-        private void dgvHocVien_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
 
         private void button2_Click(object sender, EventArgs e)
         {
@@ -72,15 +58,14 @@ namespace ForeignLanguageCenter
 
         private void btnCourse_Click(object sender, EventArgs e)
         {
-
+            frmCourse fCourse = new frmCourse();
+            fCourse.ShowDialog(); // ✅ tương tự
         }
 
         private void btnStudent_Click(object sender, EventArgs e)
         {
             frmStudent fStudent = new frmStudent();
-            this.Hide();
-            fStudent.Show();
+            fStudent.ShowDialog(); // ✅ MainForm vẫn
         }
     }
     }
-}
