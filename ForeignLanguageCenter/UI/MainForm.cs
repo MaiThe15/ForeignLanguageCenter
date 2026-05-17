@@ -81,5 +81,16 @@ namespace ForeignLanguageCenter
             frmTransaction frmTransaction = new frmTransaction();
             frmTransaction.ShowDialog();
         }
+
+        private void financeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UI.frmFinance financeForm = new UI.frmFinance();
+
+            // 2. Cấu hình để Form khi bật lên sẽ tự động nằm ở chính giữa màn hình máy tính
+            financeForm.StartPosition = FormStartPosition.CenterScreen;
+
+            // 3. Hiển thị Form lên
+            financeForm.Show();
+        }
     }
 }

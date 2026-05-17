@@ -8,9 +8,8 @@ namespace ForeignLanguageCenter.Models
 {
     internal class TransactionDetail
     {
-        public int TransactionDetailID { get; set; }
         public int TransactionID { get; set; }
-        public int CourseID { get; set; }
-        public decimal Price { get; set; }
+        public string Makh { get; set; } // Mã khóa học / Mã lớp học
+        public decimal UnitPrice { get; set; } // Học phí tại thời điểm đăng ký
     }
 }
