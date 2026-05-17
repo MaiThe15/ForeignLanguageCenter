@@ -185,7 +185,7 @@ namespace ForeignLanguageCenter.Models
         }
             catch
             {
-                MessageBox.Show("Chọn khóa học cần xóa");
+                MessageBox.Show("Select the course you want to delete.");
             }
 
 }
@@ -207,16 +207,51 @@ namespace ForeignLanguageCenter.Models
 
             if (result == DialogResult.Yes)
             {
-                MessageBox.Show(
-                    "Payment successful!",
-                    "Success",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information
-                );
+                if (result == DialogResult.Yes)
+                {
+                    try
+                    {
+                        TransactionManager tm = new TransactionManager();
 
-                dgvCourseCart.Rows.Clear();
+                        int studentID = 1;
+                        string processedBy = "admin";
+
+                        // Thêm transaction
+                        int transactionID =
+                            tm.AddTransaction(studentID, processedBy, total);
+
+                        // Thêm details
+                        foreach (DataGridViewRow row in dgvCourseCart.Rows)
+                        {
+                            if (row.Cells["CourseID"].Value != null)
+                            {
+                                int courseID =
+                                    Convert.ToInt32(row.Cells["CourseID"].Value);
+
+                                decimal price =
+                                    Convert.ToDecimal(row.Cells["TuitionFee"].Value);
+
+                                tm.AddTransactionDetail(
+                                    transactionID,
+                                    courseID,
+                                    price
+                                );
+                            }
+                        }
+
+                        MessageBox.Show(
+                            "Payment successful!",
+                            "Success"
+                        );
+
+                        dgvCourseCart.Rows.Clear();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error: " + ex.Message);
+                    }
+                }
             }
-
         }
     }
 }

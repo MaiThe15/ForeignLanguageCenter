@@ -78,7 +78,8 @@ namespace ForeignLanguageCenter
 
         private void tranSactionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            frmTransaction frmTransaction = new frmTransaction();
+            frmTransaction.ShowDialog();
         }
     }
 }
