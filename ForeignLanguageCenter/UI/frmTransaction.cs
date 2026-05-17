@@ -38,24 +38,8 @@ namespace ForeignLanguageCenter.UI
         }
         private void btnSearch_Transaction_Click(object sender, EventArgs e)
         {
-            dgvTransactions.DataSource = transactionManager.SearchTransactions(txtTransactionID.Text, txtStudentID.Text, txtProcessedBy.Text, txtTotalAmount.Text, dtstartDate.Value.Date, dtEndDate.Value.Date);
+            dgvTransactions.DataSource = transactionManager.SearchTransactions(txtTransactionID.Text, txtStudentID.Text, txtCourseID.Text, txtProcessedBy.Text, txtAmountPaid.Text, dtstartDate.Value.Date, dtEndDate.Value.Date);
         }
 
-        private void btnViewDetail_Click(object sender, EventArgs e)
-        {
-            if (dgvTransactions.CurrentRow == null)
-            {
-                MessageBox.Show("Please select a transaction!");
-                return;
-            }
-
-            int transactionID = Convert.ToInt32(
-                dgvTransactions.CurrentRow.Cells["TransactionID"].Value
-            );
-
-            TransactionManager tm = new TransactionManager();
-
-            MessageBox.Show(tm.GetTransactionDetails(transactionID), "Transaction details");
-        }
     }
 }

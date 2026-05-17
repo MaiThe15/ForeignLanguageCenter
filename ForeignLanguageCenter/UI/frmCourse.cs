@@ -198,58 +198,43 @@ namespace ForeignLanguageCenter.Models
                 total += Convert.ToDecimal(row.Cells["TuitionFee"].Value);
             }
 
-            DialogResult result = MessageBox.Show(
-                "Total payment: " + total.ToString("N0") + " VND\n\nDo you want to continue?",
-                "Payment Confirmation",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question
-            );
+            DialogResult result = MessageBox.Show( "Total payment: " + total.ToString("N0") + " VND\n\nDo you want to continue?", "Payment Confirmation",  MessageBoxButtons.YesNo, MessageBoxIcon.Question );
 
             if (result == DialogResult.Yes)
             {
-                if (result == DialogResult.Yes)
+                try
                 {
-                    try
+                    TransactionManager tm = new TransactionManager();
+
+                    int studentID = 1;
+                    string processedBy = "admin";
+
+                    foreach (DataGridViewRow row in dgvCourseCart.Rows)
                     {
-                        TransactionManager tm = new TransactionManager();
-
-                        int studentID = 1;
-                        string processedBy = "admin";
-
-                        // Thêm transaction
-                        int transactionID =
-                            tm.AddTransaction(studentID, processedBy, total);
-
-                        // Thêm details
-                        foreach (DataGridViewRow row in dgvCourseCart.Rows)
+                        if (row.Cells["CourseID"].Value != null)
                         {
-                            if (row.Cells["CourseID"].Value != null)
-                            {
-                                int courseID =
-                                    Convert.ToInt32(row.Cells["CourseID"].Value);
+                            int courseID =
+                                Convert.ToInt32(row.Cells["CourseID"].Value);
 
-                                decimal price =
-                                    Convert.ToDecimal(row.Cells["TuitionFee"].Value);
+                            decimal amountPaid =
+                                Convert.ToDecimal(row.Cells["TuitionFee"].Value);
 
-                                tm.AddTransactionDetail(
-                                    transactionID,
-                                    courseID,
-                                    price
-                                );
-                            }
+                            tm.AddTransaction(
+                                studentID,
+                                courseID,
+                                processedBy,
+                                amountPaid
+                            );
                         }
-
-                        MessageBox.Show(
-                            "Payment successful!",
-                            "Success"
-                        );
-
-                        dgvCourseCart.Rows.Clear();
                     }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Error: " + ex.Message);
-                    }
+
+                    MessageBox.Show("Payment successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information );
+
+                    dgvCourseCart.Rows.Clear();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK,  MessageBoxIcon.Error);
                 }
             }
         }

@@ -21,30 +21,29 @@ namespace ForeignLanguageCenter.BLL
         public DataTable GetAllTransactions()
         {
             string query = @"
-                SELECT TransactionID AS [TransactionID], StudentID AS [StudentID], TransactionDate AS [TransactionDate], ProcessedBy AS [ProcessedBy], TotalAmount AS [TotalAmount] FROM Transactions
+                SELECT TransactionID AS [TransactionID], StudentID AS [StudentID], CourseID AS [CourseID], TransactionDate AS [TransactionDate], ProcessedBy AS [ProcessedBy], AmountPaid AS [AmountPaid] FROM Transactions
             ";
 
             return db.ExecuteQuery(query);
         }
 
-        public int AddTransaction(int studentID, string processedBy, decimal totalAmount)
+        public int AddTransaction(
+    int studentID,
+    int courseID,
+    string processedBy,
+    decimal amountPaid)
         {
             using (SqlConnection conn = db.GetConnection())
             {
                 string sql = @"
-                    INSERT INTO Transactions
-                    (StudentID, TransactionDate, ProcessedBy, TotalAmount)
-                    VALUES
-                    (@StudentID, GETDATE(), @ProcessedBy, @TotalAmount);
-
-                    SELECT SCOPE_IDENTITY();
-                ";
+            INSERT INTO Transactions ( StudentID, CourseID, TransactionDate, ProcessedBy, AmountPaid) VALUES ( @StudentID, @CourseID, GETDATE(),  @ProcessedBy,  @AmountPaid); SELECT SCOPE_IDENTITY();";
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
 
                 cmd.Parameters.AddWithValue("@StudentID", studentID);
+                cmd.Parameters.AddWithValue("@CourseID", courseID);
                 cmd.Parameters.AddWithValue("@ProcessedBy", processedBy);
-                cmd.Parameters.AddWithValue("@TotalAmount", totalAmount);
+                cmd.Parameters.AddWithValue("@AmountPaid", amountPaid);
 
                 conn.Open();
 
@@ -55,30 +54,7 @@ namespace ForeignLanguageCenter.BLL
             }
         }
 
-        public void AddTransactionDetail(int transactionID, int courseID, decimal price)
-        {
-            using (SqlConnection conn = db.GetConnection())
-            {
-                string sql = @"
-                    INSERT INTO TransactionDetails
-                    (TransactionID, CourseID, Price)
-                    VALUES
-                    (@TransactionID, @CourseID, @Price)
-                ";
-
-                SqlCommand cmd = new SqlCommand(sql, conn);
-
-                cmd.Parameters.AddWithValue("@TransactionID", transactionID);
-                cmd.Parameters.AddWithValue("@CourseID", courseID);
-                cmd.Parameters.AddWithValue("@Price", price);
-
-                conn.Open();
-
-                cmd.ExecuteNonQuery();
-            }
-        }
-
-        public DataTable SearchTransactions(string transactionID, string studentID, string processedBy, string totalAmount, DateTime fromDate, DateTime toDate)
+        public DataTable SearchTransactions(string transactionID, string studentID, string courseID, string processedBy, string amountPaid , DateTime fromDate, DateTime toDate)
         {
             DataTable dt = GetAllTransactions();
 
@@ -101,6 +77,16 @@ namespace ForeignLanguageCenter.BLL
                 filter += $"StudentID = {stuId}";
             }
 
+            // CourseID
+            if (!string.IsNullOrEmpty(courseID)
+                && int.TryParse(courseID, out int couId))
+            {
+                if (filter != "")
+                    filter += " AND ";
+
+                filter += $"CourseID = {couId}";
+            }
+
             // ProcessedBy
             if (!string.IsNullOrEmpty(processedBy))
             {
@@ -110,22 +96,21 @@ namespace ForeignLanguageCenter.BLL
                 filter += $"ProcessedBy LIKE '%{processedBy}%'";
             }
 
-            // TotalAmount
-            if (!string.IsNullOrEmpty(totalAmount)
-                && decimal.TryParse(totalAmount, out decimal amount))
+            // AmountPaid
+            if (!string.IsNullOrEmpty(amountPaid) && decimal.TryParse(amountPaid, out decimal amount))
             {
                 if (filter != "")
                     filter += " AND ";
 
-                filter += $"TotalAmount = {amount}";
+                filter += $"AmountPaid = {amount}";
             }
 
-            // FromDate -> ToDate
+            // From Date -> To Date
             if (filter != "")
                 filter += " AND ";
 
             filter += string.Format(
-                "TransactionDate >= #{0:MM/dd/yyyy}# AND TransactionDate <= #{1:MM/dd/yyyy}#",fromDate, toDate);
+                "TransactionDate >= #{0:MM/dd/yyyy}# AND TransactionDate <= #{1:MM/dd/yyyy}#", fromDate, toDate.AddDays(1));
 
             DataView dv = dt.DefaultView;
 
@@ -135,25 +120,6 @@ namespace ForeignLanguageCenter.BLL
             }
 
             return dv.ToTable();
-        }
-
-        public string GetTransactionDetails(int transactionID)
-        {
-            string query = @" SELECT c.CourseName, td.Price FROM TransactionDetails td JOIN Courses c ON td.CourseID = c.CourseID WHERE td.TransactionID = " + transactionID;
-
-            DataTable dt = db.ExecuteQuery(query);
-
-            string detail = "Danh sách khóa học:\n\n";
-
-            foreach (DataRow row in dt.Rows)
-            {
-                detail += "- " + row["CourseName"].ToString()
-                       + " | Price: "
-                       + Convert.ToDecimal(row["Price"]).ToString("N0")
-                       + " VNĐ\n";
-            }
-
-            return detail;
         }
     }
 }

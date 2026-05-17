@@ -34,7 +34,7 @@
             this.dtstartDate = new System.Windows.Forms.DateTimePicker();
             this.txtProcessedBy = new System.Windows.Forms.TextBox();
             this.txtStudentID = new System.Windows.Forms.TextBox();
-            this.txtTotalAmount = new System.Windows.Forms.TextBox();
+            this.txtAmountPaid = new System.Windows.Forms.TextBox();
             this.txtTransactionID = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -43,20 +43,23 @@
             this.label1 = new System.Windows.Forms.Label();
             this.btnBack = new System.Windows.Forms.Button();
             this.btnSearch__Transaction = new System.Windows.Forms.Button();
-            this.btnViewDetail = new System.Windows.Forms.Button();
             this.dgvTransactions = new System.Windows.Forms.DataGridView();
+            this.label7 = new System.Windows.Forms.Label();
+            this.txtCourseID = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTransactions)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.txtCourseID);
+            this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.dtEndDate);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.dtstartDate);
             this.groupBox1.Controls.Add(this.txtProcessedBy);
             this.groupBox1.Controls.Add(this.txtStudentID);
-            this.groupBox1.Controls.Add(this.txtTotalAmount);
+            this.groupBox1.Controls.Add(this.txtAmountPaid);
             this.groupBox1.Controls.Add(this.txtTransactionID);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label4);
@@ -65,14 +68,14 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(645, 197);
+            this.groupBox1.Size = new System.Drawing.Size(645, 241);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Transaction Information";
             // 
             // dtEndDate
             // 
-            this.dtEndDate.Location = new System.Drawing.Point(449, 141);
+            this.dtEndDate.Location = new System.Drawing.Point(449, 175);
             this.dtEndDate.Name = "dtEndDate";
             this.dtEndDate.Size = new System.Drawing.Size(180, 22);
             this.dtEndDate.TabIndex = 11;
@@ -80,7 +83,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(348, 141);
+            this.label6.Location = new System.Drawing.Point(348, 175);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(59, 16);
             this.label6.TabIndex = 10;
@@ -88,14 +91,14 @@
             // 
             // dtstartDate
             // 
-            this.dtstartDate.Location = new System.Drawing.Point(127, 141);
+            this.dtstartDate.Location = new System.Drawing.Point(127, 175);
             this.dtstartDate.Name = "dtstartDate";
             this.dtstartDate.Size = new System.Drawing.Size(180, 22);
             this.dtstartDate.TabIndex = 9;
             // 
             // txtProcessedBy
             // 
-            this.txtProcessedBy.Location = new System.Drawing.Point(127, 84);
+            this.txtProcessedBy.Location = new System.Drawing.Point(127, 132);
             this.txtProcessedBy.Name = "txtProcessedBy";
             this.txtProcessedBy.Size = new System.Drawing.Size(180, 22);
             this.txtProcessedBy.TabIndex = 8;
@@ -107,12 +110,12 @@
             this.txtStudentID.Size = new System.Drawing.Size(180, 22);
             this.txtStudentID.TabIndex = 7;
             // 
-            // txtTotalAmount
+            // txtAmountPaid
             // 
-            this.txtTotalAmount.Location = new System.Drawing.Point(449, 87);
-            this.txtTotalAmount.Name = "txtTotalAmount";
-            this.txtTotalAmount.Size = new System.Drawing.Size(180, 22);
-            this.txtTotalAmount.TabIndex = 6;
+            this.txtAmountPaid.Location = new System.Drawing.Point(449, 87);
+            this.txtAmountPaid.Name = "txtAmountPaid";
+            this.txtAmountPaid.Size = new System.Drawing.Size(180, 22);
+            this.txtAmountPaid.TabIndex = 6;
             // 
             // txtTransactionID
             // 
@@ -126,9 +129,9 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(348, 93);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(89, 16);
+            this.label5.Size = new System.Drawing.Size(80, 16);
             this.label5.TabIndex = 4;
-            this.label5.Text = "Total Amount:";
+            this.label5.Text = "AmountPaid";
             // 
             // label4
             // 
@@ -142,7 +145,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(23, 87);
+            this.label3.Location = new System.Drawing.Point(23, 135);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(95, 16);
             this.label3.TabIndex = 2;
@@ -151,7 +154,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(23, 141);
+            this.label2.Location = new System.Drawing.Point(23, 180);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(73, 16);
             this.label2.TabIndex = 1;
@@ -178,23 +181,13 @@
             // 
             // btnSearch__Transaction
             // 
-            this.btnSearch__Transaction.Location = new System.Drawing.Point(12, 227);
+            this.btnSearch__Transaction.Location = new System.Drawing.Point(673, 69);
             this.btnSearch__Transaction.Name = "btnSearch__Transaction";
             this.btnSearch__Transaction.Size = new System.Drawing.Size(75, 23);
             this.btnSearch__Transaction.TabIndex = 10;
             this.btnSearch__Transaction.Text = "Search";
             this.btnSearch__Transaction.UseVisualStyleBackColor = true;
             this.btnSearch__Transaction.Click += new System.EventHandler(this.btnSearch_Transaction_Click);
-            // 
-            // btnViewDetail
-            // 
-            this.btnViewDetail.Location = new System.Drawing.Point(139, 227);
-            this.btnViewDetail.Name = "btnViewDetail";
-            this.btnViewDetail.Size = new System.Drawing.Size(75, 23);
-            this.btnViewDetail.TabIndex = 11;
-            this.btnViewDetail.Text = "Detail";
-            this.btnViewDetail.UseVisualStyleBackColor = true;
-            this.btnViewDetail.Click += new System.EventHandler(this.btnViewDetail_Click);
             // 
             // dgvTransactions
             // 
@@ -206,13 +199,28 @@
             this.dgvTransactions.Size = new System.Drawing.Size(741, 148);
             this.dgvTransactions.TabIndex = 12;
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(23, 90);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(69, 16);
+            this.label7.TabIndex = 12;
+            this.label7.Text = "Courset ID";
+            // 
+            // txtCourseID
+            // 
+            this.txtCourseID.Location = new System.Drawing.Point(127, 90);
+            this.txtCourseID.Name = "txtCourseID";
+            this.txtCourseID.Size = new System.Drawing.Size(180, 22);
+            this.txtCourseID.TabIndex = 13;
+            // 
             // frmTransaction
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.dgvTransactions);
-            this.Controls.Add(this.btnViewDetail);
             this.Controls.Add(this.btnSearch__Transaction);
             this.Controls.Add(this.btnBack);
             this.Controls.Add(this.groupBox1);
@@ -238,12 +246,13 @@
         private System.Windows.Forms.DateTimePicker dtstartDate;
         private System.Windows.Forms.TextBox txtProcessedBy;
         private System.Windows.Forms.TextBox txtStudentID;
-        private System.Windows.Forms.TextBox txtTotalAmount;
+        private System.Windows.Forms.TextBox txtAmountPaid;
         private System.Windows.Forms.TextBox txtTransactionID;
         private System.Windows.Forms.Button btnSearch__Transaction;
-        private System.Windows.Forms.Button btnViewDetail;
         private System.Windows.Forms.DataGridView dgvTransactions;
         private System.Windows.Forms.DateTimePicker dtEndDate;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox txtCourseID;
+        private System.Windows.Forms.Label label7;
     }
 }
