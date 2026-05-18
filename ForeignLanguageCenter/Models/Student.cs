@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace ForeignLanguageCenter.Models
 {
+    /// <summary>
+    /// Lưu thông tin học viên.
+    /// </summary>
     internal class Student
     {
         public int StudentID { get; set; }

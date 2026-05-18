@@ -8,7 +8,10 @@ using System.Threading.Tasks;
 using ForeignLanguageCenter.DAL;
 
 namespace ForeignLanguageCenter.BLL
-    {
+{
+    /// <summary>
+    /// Xử lý các chức năng liên quan đến giao dịch.
+    /// </summary>
     internal class TransactionManager
     {
         private DatabaseConnection db;
@@ -18,23 +21,36 @@ namespace ForeignLanguageCenter.BLL
             db = new DatabaseConnection();
         }
 
+        /// <summary>
+        /// Lấy danh sách tất cả giao dịch.
+        /// </summary>
         public DataTable GetAllTransactions()
         {
             string query = @"
-                SELECT TransactionID AS [TransactionID], StudentID AS [StudentID], CourseID AS [CourseID], TransactionDate AS [TransactionDate], ProcessedBy AS [ProcessedBy], AmountPaid AS [AmountPaid] FROM Transactions
-            ";
+                SELECT TransactionID AS [TransactionID],
+                       StudentID AS [StudentID],
+                       CourseID AS [CourseID],
+                       TransactionDate AS [TransactionDate],
+                       ProcessedBy AS [ProcessedBy],
+                       AmountPaid AS [AmountPaid]
+                FROM Transactions";
 
             return db.ExecuteQuery(query);
         }
 
+        /// <summary>
+        /// Thêm giao dịch mới.
+        /// </summary>
         public int AddTransaction(int studentID, int courseID, string processedBy, decimal amountPaid)
         {
             StudentManager st = new StudentManager();
             CourseManager cm = new CourseManager();
+
             if (st.IsStudentExist(studentID) == false)
             {
                 throw new Exception("Student not found.");
             }
+
             if (cm.IsCourseExist(courseID) == false)
             {
                 throw new Exception("Course not found.");
@@ -42,7 +58,13 @@ namespace ForeignLanguageCenter.BLL
 
             using (SqlConnection conn = db.GetConnection())
             {
-                string sql = @"INSERT INTO Transactions ( StudentID, CourseID, TransactionDate, ProcessedBy, AmountPaid) VALUES ( @StudentID, @CourseID, GETDATE(),  @ProcessedBy,  @AmountPaid); SELECT SCOPE_IDENTITY();";
+                string sql = @"
+                    INSERT INTO Transactions
+                    (StudentID, CourseID, TransactionDate, ProcessedBy, AmountPaid)
+                    VALUES
+                    (@StudentID, @CourseID, GETDATE(), @ProcessedBy, @AmountPaid);
+
+                    SELECT SCOPE_IDENTITY();";
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
 
@@ -53,28 +75,40 @@ namespace ForeignLanguageCenter.BLL
 
                 conn.Open();
 
-                int transactionID =
-                    Convert.ToInt32(cmd.ExecuteScalar());
+                int transactionID = Convert.ToInt32(cmd.ExecuteScalar());
 
                 return transactionID;
             }
         }
 
+        /// <summary>
+        /// Cập nhật thông tin giao dịch.
+        /// </summary>
         public void UpdateTransaction(int transactionID, int studentID, int courseID, decimal amountPaid, string processedBy, DateTime transactionDate)
-        {   
+        {
             StudentManager st = new StudentManager();
-             CourseManager cm = new CourseManager();
+            CourseManager cm = new CourseManager();
+
             if (st.IsStudentExist(studentID) == false)
             {
                 throw new Exception("Student not found.");
             }
-             if (cm.IsCourseExist(courseID) == false)
+
+            if (cm.IsCourseExist(courseID) == false)
             {
                 throw new Exception("Course not found.");
             }
+
             using (SqlConnection conn = db.GetConnection())
             {
-                string sql = @"UPDATE Transactions SET  StudentID = @StudentID, CourseID = @CourseID, AmountPaid = @AmountPaid, ProcessedBy = @ProcessedBy, TransactionDate = @TransactionDate WHERE TransactionID = @TransactionID";
+                string sql = @"
+                    UPDATE Transactions
+                    SET StudentID = @StudentID,
+                        CourseID = @CourseID,
+                        AmountPaid = @AmountPaid,
+                        ProcessedBy = @ProcessedBy,
+                        TransactionDate = @TransactionDate
+                    WHERE TransactionID = @TransactionID";
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
 
@@ -90,6 +124,9 @@ namespace ForeignLanguageCenter.BLL
             }
         }
 
+        /// <summary>
+        /// Xóa giao dịch theo mã giao dịch.
+        /// </summary>
         public void DeleteTransaction(int transactionID)
         {
             using (SqlConnection conn = db.GetConnection())
@@ -97,6 +134,7 @@ namespace ForeignLanguageCenter.BLL
                 string sql = "DELETE FROM Transactions WHERE TransactionID = @ID";
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
+
                 cmd.Parameters.AddWithValue("@ID", transactionID);
 
                 conn.Open();
@@ -104,20 +142,27 @@ namespace ForeignLanguageCenter.BLL
             }
         }
 
-        public DataTable SearchTransactions(string transactionID, string studentID, string courseID, string processedBy, string amountPaid , DateTime StartDate)
+        /// <summary>
+        /// Tìm kiếm giao dịch theo các điều kiện.
+        /// </summary>
+        public DataTable SearchTransactions(
+            string transactionID,
+            string studentID,
+            string courseID,
+            string processedBy,
+            string amountPaid,
+            DateTime StartDate)
         {
             DataTable dt = GetAllTransactions();
 
             string filter = "";
 
-            // TransactionID
             if (!string.IsNullOrEmpty(transactionID)
                 && int.TryParse(transactionID, out int transId))
             {
                 filter += $"TransactionID = {transId}";
             }
 
-            // StudentID
             if (!string.IsNullOrEmpty(studentID)
                 && int.TryParse(studentID, out int stuId))
             {
@@ -127,7 +172,6 @@ namespace ForeignLanguageCenter.BLL
                 filter += $"StudentID = {stuId}";
             }
 
-            // CourseID
             if (!string.IsNullOrEmpty(courseID)
                 && int.TryParse(courseID, out int couId))
             {
@@ -137,7 +181,6 @@ namespace ForeignLanguageCenter.BLL
                 filter += $"CourseID = {couId}";
             }
 
-            // ProcessedBy
             if (!string.IsNullOrEmpty(processedBy))
             {
                 if (filter != "")
@@ -146,8 +189,8 @@ namespace ForeignLanguageCenter.BLL
                 filter += $"ProcessedBy LIKE '%{processedBy}%'";
             }
 
-            // AmountPaid
-            if (!string.IsNullOrEmpty(amountPaid) && decimal.TryParse(amountPaid, out decimal amount))
+            if (!string.IsNullOrEmpty(amountPaid)
+                && decimal.TryParse(amountPaid, out decimal amount))
             {
                 if (filter != "")
                     filter += " AND ";
@@ -159,7 +202,9 @@ namespace ForeignLanguageCenter.BLL
                 filter += " AND ";
 
             filter += string.Format(
-                "TransactionDate >= #{0:MM/dd/yyyy}# AND TransactionDate <= #{1:MM/dd/yyyy}#", StartDate,DateTime.Now.AddDays(1));
+                "TransactionDate >= #{0:MM/dd/yyyy}# AND TransactionDate <= #{1:MM/dd/yyyy}#",
+                StartDate,
+                DateTime.Now.AddDays(1));
 
             DataView dv = dt.DefaultView;
 

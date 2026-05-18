@@ -13,25 +13,32 @@ using System.Windows.Forms;
 
 namespace ForeignLanguageCenter
 {
+    /// <summary>
+    /// Form chính của hệ thống.
+    /// </summary>
     public partial class MainForm : Form
     {
         private StudentManager studentManager;
 
-
-        // Phần phân quyền sẽ được thêm vào đây
-        private string currentUserRole; // Biến lưu trữ quyền của người đang đăng nhập
+        private string currentUserRole;
         private string currentUsername;
 
-        // Sửa hàm tạo (Constructor) để nhận biến role
+        /// <summary>
+        /// Khởi tạo form chính và nhận thông tin người dùng đăng nhập.
+        /// </summary>
         public MainForm(string username, string role)
         {
             InitializeComponent();
+
             currentUsername = username;
             currentUserRole = role;
+
             studentManager = new StudentManager();
         }
 
-        // Hàm xử lý phân quyền
+        /// <summary>
+        /// Phân quyền chức năng theo vai trò người dùng.
+        /// </summary>
         private void ApplyAuthorization()
         {
             if (currentUserRole == "User")
@@ -40,49 +47,71 @@ namespace ForeignLanguageCenter
             }
             else if (currentUserRole == "Admin")
             {
-                
+
             }
         }
-
 
         private void button2_Click(object sender, EventArgs e)
         {
 
         }
+
+        /// <summary>
+        /// Mở form quản lý học viên.
+        /// </summary>
         private void studentToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmStudent fStudent = new frmStudent(currentUserRole);
-            fStudent.ShowDialog(); // ✅ MainForm vẫn
+
+            fStudent.ShowDialog();
         }
 
+        /// <summary>
+        /// Mở form quản lý khóa học.
+        /// </summary>
         private void courseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            CourseManagerment fCourse = new CourseManagerment(currentUsername, currentUserRole);
-            fCourse.ShowDialog(); // ✅ tương tự
+            CourseManagerment fCourse =
+                new CourseManagerment(currentUsername, currentUserRole);
+
+            fCourse.ShowDialog();
         }
 
+        /// <summary>
+        /// Đăng xuất khỏi hệ thống.
+        /// </summary>
         private void LogOut_Click(object sender, EventArgs e)
         {
             LoginForm login = new LoginForm();
+
             this.Hide();
+
             login.ShowDialog();
+
             this.Close();
         }
 
+        /// <summary>
+        /// Mở form quản lý giao dịch.
+        /// </summary>
         private void tranSactionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmTransaction frmTransaction = new frmTransaction(currentUsername);
+            frmTransaction frmTransaction =
+                new frmTransaction(currentUsername);
+
             frmTransaction.ShowDialog();
         }
 
+        /// <summary>
+        /// Mở form thống kê tài chính.
+        /// </summary>
         private void financeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             UI.frmFinance financeForm = new UI.frmFinance();
 
-            // 2. Cấu hình để Form khi bật lên sẽ tự động nằm ở chính giữa màn hình máy tính
-            financeForm.StartPosition = FormStartPosition.CenterScreen;
+            financeForm.StartPosition =
+                FormStartPosition.CenterScreen;
 
-            // 3. Hiển thị Form lên
             financeForm.Show();
         }
     }

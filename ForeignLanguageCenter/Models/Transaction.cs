@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace ForeignLanguageCenter.Models
 {
+    /// <summary>
+    /// Lưu thông tin các giao dịch.
+    /// </summary>
     internal class Transaction
     {
         public int TransactionID { get; set; }

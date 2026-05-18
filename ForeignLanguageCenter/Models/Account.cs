@@ -6,9 +6,13 @@ using System.Threading.Tasks;
 
 namespace ForeignLanguageCenter.Models
 {
+    /// <summary>
+    /// Lưu thông tin tài khoản người dùng.
+    /// </summary>
     internal class Account
     {
         public string Username { get; set; }
-        public string Role { get; set; } // "Admin" hoặc "User"
+
+        public string Role { get; set; }
     }
 }

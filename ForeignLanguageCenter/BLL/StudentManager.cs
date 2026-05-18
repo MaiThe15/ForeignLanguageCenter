@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace ForeignLanguageCenter.BLL
 {
+    /// <summary>
+    /// Xử lý các chức năng liên quan đến học viên.
+    /// </summary>
     internal class StudentManager
     {
         private DatabaseConnection db;
@@ -19,22 +22,26 @@ namespace ForeignLanguageCenter.BLL
         }
 
         /// <summary>
-        /// Lấy toàn bộ danh sách học viên
+        /// Lấy danh sách tất cả học viên.
         /// </summary>
         public DataTable GetAllStudents()
         {
             string query = "SELECT StudentID AS [StudentID], FullName AS [FullName], PhoneNumber AS [PhoneNumber], Status AS [Status] FROM Students";
+
             return db.ExecuteQuery(query);
         }
 
-        // File: BLL/StudentManager.cs
+        /// <summary>
+        /// Thêm học viên mới.
+        /// </summary>
         public void AddStudent(string name, string phone, string status)
         {
             using (SqlConnection conn = db.GetConnection())
             {
-                // StudentID không cần thêm vì là IDENTITY tự tăng trong SQL
                 string query = "INSERT INTO Students (FullName, PhoneNumber, Status) VALUES (@Name, @Phone, @Status)";
+
                 SqlCommand cmd = new SqlCommand(query, conn);
+
                 cmd.Parameters.AddWithValue("@Name", name);
                 cmd.Parameters.AddWithValue("@Phone", phone);
                 cmd.Parameters.AddWithValue("@Status", status);
@@ -43,43 +50,58 @@ namespace ForeignLanguageCenter.BLL
                 cmd.ExecuteNonQuery();
             }
         }
+
+        /// <summary>
+        /// Xóa học viên theo mã học viên.
+        /// </summary>
         public void DeleteStudent(int id)
         {
             using (SqlConnection conn = db.GetConnection())
             {
                 string sql = "DELETE FROM Students WHERE StudentID=@ID";
+
                 SqlCommand cmd = new SqlCommand(sql, conn);
+
                 cmd.Parameters.AddWithValue("@ID", id);
-                conn.Open();
-                cmd.ExecuteNonQuery();
-            }
-        }// Tương tự, bạn sẽ viết các hàm AddStudent(Student s), UpdateStudent, DeleteStudent ở đây...
-         // 3. Nghiệp vụ Sửa (Update)
-        public void UpdateStudent(int id, string name, string phone, string status)
-        {
-            using (SqlConnection conn = db.GetConnection())
-            {
-                string sql = "UPDATE Students SET FullName=@Name, PhoneNumber=@Phone, Status=@Status WHERE StudentID=@ID";
-                SqlCommand cmd = new SqlCommand(sql, conn);
-                cmd.Parameters.AddWithValue("@ID", id);
-                cmd.Parameters.AddWithValue("@Name", name);
-                cmd.Parameters.AddWithValue("@Phone", phone);
-                cmd.Parameters.AddWithValue("@Status", status);
+
                 conn.Open();
                 cmd.ExecuteNonQuery();
             }
         }
 
+        /// <summary>
+        /// Cập nhật thông tin học viên.
+        /// </summary>
+        public void UpdateStudent(int id, string name, string phone, string status)
+        {
+            using (SqlConnection conn = db.GetConnection())
+            {
+                string sql = "UPDATE Students SET FullName=@Name, PhoneNumber=@Phone, Status=@Status WHERE StudentID=@ID";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+
+                cmd.Parameters.AddWithValue("@ID", id);
+                cmd.Parameters.AddWithValue("@Name", name);
+                cmd.Parameters.AddWithValue("@Phone", phone);
+                cmd.Parameters.AddWithValue("@Status", status);
+
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        /// <summary>
+        /// Tìm kiếm học viên theo thông tin nhập vào.
+        /// </summary>
         public DataTable SearchStudents(string id, string name, string phone, string status)
         {
             DataTable dt = GetAllStudents();
 
             string filter = "";
 
-            // Tìm theo StudentID
             if (!string.IsNullOrEmpty(id) && int.TryParse(id, out int studentId))
             {
-                    filter += $"StudentID = {studentId}";
+                filter += $"StudentID = {studentId}";
             }
 
             if (!string.IsNullOrEmpty(name))
@@ -90,7 +112,6 @@ namespace ForeignLanguageCenter.BLL
                 filter += $"FullName LIKE '%{name}%'";
             }
 
-            // Tìm theo PhoneNumber
             if (!string.IsNullOrEmpty(phone))
             {
                 if (filter != "")
@@ -99,17 +120,15 @@ namespace ForeignLanguageCenter.BLL
                 filter += $"PhoneNumber LIKE '%{phone}%'";
             }
 
-            // Tìm theo Status
             if (!string.IsNullOrEmpty(status))
             {
                 if (filter != "")
                     filter += " AND ";
 
-                filter += $"Status = {status}";
+                filter += $"Status = '{status}'";
             }
 
             DataView dv = dt.DefaultView;
-
 
             if (!string.IsNullOrEmpty(filter))
             {
@@ -118,20 +137,26 @@ namespace ForeignLanguageCenter.BLL
 
             return dv.ToTable();
         }
+
+        /// <summary>
+        /// Kiểm tra học viên có tồn tại hay không.
+        /// </summary>
         public bool IsStudentExist(int studentID)
         {
             using (SqlConnection conn = db.GetConnection())
             {
                 string sql = "SELECT COUNT(*) FROM Students WHERE StudentID = @ID";
+
                 SqlCommand cmd = new SqlCommand(sql, conn);
+
                 cmd.Parameters.AddWithValue("@ID", studentID);
 
                 conn.Open();
+
                 int count = (int)cmd.ExecuteScalar();
 
                 return count > 0;
             }
         }
-
     }
 }

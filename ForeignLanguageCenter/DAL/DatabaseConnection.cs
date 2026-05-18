@@ -10,17 +10,24 @@ using System.Windows.Forms;
 
 namespace ForeignLanguageCenter.DAL
 {
+    /// <summary>
+    /// Quản lý kết nối và thao tác với cơ sở dữ liệu.
+    /// </summary>
     internal class DatabaseConnection
     {
-        // Lấy chuỗi kết nối từ App.config tự động
         private readonly string connectionString = ConfigurationManager.ConnectionStrings["MyConn"].ConnectionString;
 
+        /// <summary>
+        /// Tạo kết nối đến SQL Server.
+        /// </summary>
         public SqlConnection GetConnection()
         {
             return new SqlConnection(connectionString);
         }
 
-        // Hàm hỗ trợ thực thi câu lệnh SELECT trả về DataTable
+        /// <summary>
+        /// Thực thi câu lệnh SELECT và trả về DataTable.
+        /// </summary>
         public DataTable ExecuteQuery(string query)
         {
             DataTable data = new DataTable();

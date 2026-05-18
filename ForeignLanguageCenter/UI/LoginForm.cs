@@ -12,6 +12,9 @@ using ForeignLanguageCenter.Models;
 
 namespace ForeignLanguageCenter.UI
 {
+    /// <summary>
+    /// Form đăng nhập hệ thống.
+    /// </summary>
     public partial class LoginForm : Form
     {
         public LoginForm()
@@ -20,37 +23,58 @@ namespace ForeignLanguageCenter.UI
         }
 
         private void label1_Click(object sender, EventArgs e)
-        { 
+        {
         }
 
+        /// <summary>
+        /// Xử lý đăng nhập người dùng.
+        /// </summary>
         private void btnLogin_Click(object sender, EventArgs e)
         {
             string user = txtUsername.Text.Trim();
             string pass = txtPassword.Text.Trim();
 
-            // Kiểm tra dữ liệu đầu vào (yêu cầu bắt buộc của đề bài)
-            if (string.IsNullOrEmpty(user) || string.IsNullOrEmpty(pass))
+            if (string.IsNullOrEmpty(user) ||
+                string.IsNullOrEmpty(pass))
             {
-                MessageBox.Show("Please fill Username and Password!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(
+                    "Please fill Username and Password!",
+                    "Warning",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+
                 return;
             }
 
             AccountManager accManager = new AccountManager();
+
             Account acc = accManager.Login(user, pass);
 
             if (acc != null)
             {
-                MessageBox.Show($"Login success! Welcome {acc.Username} ({acc.Role})", "Announcement", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(
+                    $"Login success! Welcome {acc.Username} ({acc.Role})",
+                    "Announcement",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
 
-                // Truyền quyền (Role) sang MainForm
-                MainForm main = new MainForm(acc.Username, acc.Role);
-                this.Hide(); // Ẩn form đăng nhập
-                main.ShowDialog(); // Hiển thị form chính
-                this.Close(); // Đóng hẳn ứng dụng khi form chính đóng
+                MainForm main = new MainForm(
+                    acc.Username,
+                    acc.Role);
+
+                this.Hide();
+
+                main.ShowDialog();
+
+                this.Close();
             }
             else
             {
-                MessageBox.Show("Incorrect email or password!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(
+                    "Incorrect email or password!",
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
             }
         }
     }

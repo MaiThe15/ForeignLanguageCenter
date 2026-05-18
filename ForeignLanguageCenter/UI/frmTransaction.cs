@@ -14,68 +14,121 @@ using ForeignLanguageCenter.Models;
 
 namespace ForeignLanguageCenter.UI
 {
+    /// <summary>
+    /// Form quản lý giao dịch.
+    /// </summary>
     public partial class frmTransaction : Form
     {
         private TransactionManager transactionManager = new TransactionManager();
-        TransactionManager tm = new TransactionManager();
+        private TransactionManager tm = new TransactionManager();
+
         private string currentUsername;
 
         public frmTransaction(string username)
         {
             InitializeComponent();
+
             currentUsername = username;
         }
 
+        /// <summary>
+        /// Tải dữ liệu giao dịch khi form mở.
+        /// </summary>
         private void frmTransaction_Load(object sender, EventArgs e)
         {
-            dgvTransactions.DataSource = transactionManager.GetAllTransactions();
+            dgvTransactions.DataSource =
+                transactionManager.GetAllTransactions();
         }
+
+        /// <summary>
+        /// Kiểm tra dữ liệu nhập hợp lệ.
+        /// </summary>
         private bool IsValidInput()
         {
             if (string.IsNullOrWhiteSpace(txtStudentID.Text))
             {
-                MessageBox.Show("Student ID cannot be empty!", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(
+                    "Student ID cannot be empty!",
+                    "Validation Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+
                 txtStudentID.Focus();
+
                 return false;
             }
 
             if (!int.TryParse(txtStudentID.Text, out int studentID))
             {
-                MessageBox.Show( "Student ID must be a number!", "Validation Error",MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(
+                    "Student ID must be a number!",
+                    "Validation Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+
                 txtStudentID.Focus();
+
                 return false;
             }
 
             if (string.IsNullOrWhiteSpace(txtCourseID.Text))
-            { MessageBox.Show( "Course ID cannot be empty!",  "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning );
+            {
+                MessageBox.Show(
+                    "Course ID cannot be empty!",
+                    "Validation Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+
                 txtCourseID.Focus();
+
                 return false;
             }
 
             if (!int.TryParse(txtCourseID.Text, out int courseID))
             {
-                MessageBox.Show( "Course ID must be a number!", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(
+                    "Course ID must be a number!",
+                    "Validation Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+
                 txtCourseID.Focus();
+
                 return false;
             }
 
             if (string.IsNullOrWhiteSpace(txtAmountPaid.Text))
             {
-                MessageBox.Show( "Amount Paid cannot be empty!", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning );
+                MessageBox.Show(
+                    "Amount Paid cannot be empty!",
+                    "Validation Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+
                 txtAmountPaid.Focus();
+
                 return false;
             }
 
             if (!decimal.TryParse(txtAmountPaid.Text, out decimal amount))
             {
-                MessageBox.Show( "Amount Paid must be a valid number!", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning );
+                MessageBox.Show(
+                    "Amount Paid must be a valid number!",
+                    "Validation Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+
                 txtAmountPaid.Focus();
+
                 return false;
             }
 
             return true;
         }
 
+        /// <summary>
+        /// Xóa dữ liệu trên form.
+        /// </summary>
         private void btnClearTransaction_Click(object sender, EventArgs e)
         {
             txtTransactionID.Clear();
@@ -88,23 +141,48 @@ namespace ForeignLanguageCenter.UI
 
             txtTransactionID.Focus();
         }
+
+        /// <summary>
+        /// Hiển thị danh sách giao dịch.
+        /// </summary>
         private void LoadData()
         {
-            dgvTransactions.DataSource = transactionManager.GetAllTransactions();
+            dgvTransactions.DataSource =
+                transactionManager.GetAllTransactions();
         }
+
+        /// <summary>
+        /// Thêm giao dịch mới.
+        /// </summary>
         private void AddTransaction_Click(object sender, EventArgs e)
         {
             if (!IsValidInput()) return;
 
             try
             {
-                transactionManager.AddTransaction(int.Parse(txtStudentID.Text), int.Parse(txtCourseID.Text), currentUsername, decimal.Parse(txtAmountPaid.Text));
-                MessageBox.Show("Transaction added successfully!", "Success");
+                transactionManager.AddTransaction(
+                    int.Parse(txtStudentID.Text),
+                    int.Parse(txtCourseID.Text),
+                    currentUsername,
+                    decimal.Parse(txtAmountPaid.Text));
+
+                MessageBox.Show(
+                    "Transaction added successfully!",
+                    "Success");
+
                 LoadData();
+
                 btnClearTransaction_Click(sender, e);
             }
-            catch (Exception ex) { MessageBox.Show("Error: " + ex.Message); }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
         }
+
+        /// <summary>
+        /// Cập nhật giao dịch.
+        /// </summary>
         private void btnUpdateTransaction_Click(object sender, EventArgs e)
         {
             if (!IsValidInput()) return;
@@ -112,15 +190,19 @@ namespace ForeignLanguageCenter.UI
             try
             {
                 if (dgvTransactions.CurrentRow != null)
-                {;
-                    int id = Convert.ToInt32(dgvTransactions.CurrentRow.Cells["TransactionID"].Value);
+                {
+                    int id = Convert.ToInt32(
+                        dgvTransactions.CurrentRow.Cells["TransactionID"].Value);
 
                     int studentID = int.Parse(txtStudentID.Text);
-                    int courseID = int.Parse(txtCourseID.Text);
-                    decimal amountPaid = decimal.Parse(txtAmountPaid.Text);
-                    DateTime transactionDate = dtTransactionDate.Value;
 
-                    
+                    int courseID = int.Parse(txtCourseID.Text);
+
+                    decimal amountPaid =
+                        decimal.Parse(txtAmountPaid.Text);
+
+                    DateTime transactionDate =
+                        dtTransactionDate.Value;
 
                     tm.UpdateTransaction(
                         id,
@@ -131,9 +213,12 @@ namespace ForeignLanguageCenter.UI
                         transactionDate
                     );
 
-                    MessageBox.Show("Transaction updated successfully!", "Success");
+                    MessageBox.Show(
+                        "Transaction updated successfully!",
+                        "Success");
 
                     LoadData();
+
                     btnClearTransaction_Click(sender, e);
                 }
             }
@@ -143,6 +228,9 @@ namespace ForeignLanguageCenter.UI
             }
         }
 
+        /// <summary>
+        /// Xóa giao dịch.
+        /// </summary>
         private void btnDeleteTransaction_Click(object sender, EventArgs e)
         {
             try
@@ -165,6 +253,7 @@ namespace ForeignLanguageCenter.UI
                         tm.DeleteTransaction(id);
 
                         LoadData();
+
                         btnClearTransaction_Click(sender, e);
                     }
                 }
@@ -174,21 +263,35 @@ namespace ForeignLanguageCenter.UI
                 MessageBox.Show("Error: " + ex.Message);
             }
         }
+
+        /// <summary>
+        /// Quay lại form chính.
+        /// </summary>
         private void btnBack_Click(object sender, EventArgs e)
         {
-            Form mainForm = Application.OpenForms["MainForm"]; // "MainForm" là tên Name của Form chính
+            Form mainForm = Application.OpenForms["MainForm"];
 
             if (mainForm != null)
             {
-                mainForm.Show(); // Hiện lại form chính
-                this.Close();    // Đóng (giải phóng) form Student hiện tại
+                mainForm.Show();
+
+                this.Close();
             }
         }
+
+        /// <summary>
+        /// Tìm kiếm giao dịch.
+        /// </summary>
         private void btnSearch_Transaction_Click(object sender, EventArgs e)
         {
-            dgvTransactions.DataSource = transactionManager.SearchTransactions(txtTransactionID.Text, txtStudentID.Text, txtCourseID.Text, txtProcessedBy.Text, txtAmountPaid.Text, dtTransactionDate.Value.Date);
+            dgvTransactions.DataSource =
+                transactionManager.SearchTransactions(
+                    txtTransactionID.Text,
+                    txtStudentID.Text,
+                    txtCourseID.Text,
+                    txtProcessedBy.Text,
+                    txtAmountPaid.Text,
+                    dtTransactionDate.Value.Date);
         }
-
-
     }
 }
