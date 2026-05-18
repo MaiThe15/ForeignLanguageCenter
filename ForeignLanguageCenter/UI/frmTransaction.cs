@@ -19,16 +19,26 @@ namespace ForeignLanguageCenter.UI
         private TransactionManager transactionManager = new TransactionManager();
         TransactionManager tm = new TransactionManager();
         private string currentUsername;
+        private string currentUserRole;
 
-        public frmTransaction(string username)
+        public frmTransaction(string username, string role)
         {
             InitializeComponent();
             currentUsername = username;
+            currentUserRole = role;
+        }
+        private void ApplyAuthorization()
+        {
+            if (currentUserRole == "User")
+            {
+                btnDeleteTransaction.Visible = false;
+            }
         }
 
         private void frmTransaction_Load(object sender, EventArgs e)
         {
             dgvTransactions.DataSource = transactionManager.GetAllTransactions();
+            ApplyAuthorization();
         }
         private bool IsValidInput()
         {

@@ -52,13 +52,13 @@ namespace ForeignLanguageCenter
         private void studentToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmStudent fStudent = new frmStudent(currentUserRole);
-            fStudent.ShowDialog(); // ✅ MainForm vẫn
+            fStudent.ShowDialog();
         }
 
         private void courseToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CourseManagerment fCourse = new CourseManagerment(currentUsername, currentUserRole);
-            fCourse.ShowDialog(); // ✅ tương tự
+            fCourse.ShowDialog();
         }
 
         private void LogOut_Click(object sender, EventArgs e)
@@ -71,7 +71,7 @@ namespace ForeignLanguageCenter
 
         private void tranSactionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmTransaction frmTransaction = new frmTransaction(currentUsername);
+            frmTransaction frmTransaction = new frmTransaction(currentUsername, currentUserRole);
             frmTransaction.ShowDialog();
         }
 
