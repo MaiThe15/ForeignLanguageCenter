@@ -62,7 +62,10 @@ namespace ForeignLanguageCenter
         private void studentToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmStudent fStudent = new frmStudent(currentUserRole);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 137b56307e2e723a7b1b7033a8c35d7543943b0f
             fStudent.ShowDialog();
         }
 
@@ -71,9 +74,13 @@ namespace ForeignLanguageCenter
         /// </summary>
         private void courseToolStripMenuItem_Click(object sender, EventArgs e)
         {
+<<<<<<< HEAD
             CourseManagerment fCourse =
                 new CourseManagerment(currentUsername, currentUserRole);
 
+=======
+            CourseManagerment fCourse = new CourseManagerment(currentUsername, currentUserRole);
+>>>>>>> 137b56307e2e723a7b1b7033a8c35d7543943b0f
             fCourse.ShowDialog();
         }
 
@@ -96,9 +103,13 @@ namespace ForeignLanguageCenter
         /// </summary>
         private void tranSactionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
+<<<<<<< HEAD
             frmTransaction frmTransaction =
                 new frmTransaction(currentUsername);
 
+=======
+            frmTransaction frmTransaction = new frmTransaction(currentUsername, currentUserRole);
+>>>>>>> 137b56307e2e723a7b1b7033a8c35d7543943b0f
             frmTransaction.ShowDialog();
         }
 
