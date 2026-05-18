@@ -31,7 +31,7 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.txtCourseID = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.dtTransactionDate = new System.Windows.Forms.DateTimePicker();
+            this.dtFromDate = new System.Windows.Forms.DateTimePicker();
             this.txtProcessedBy = new System.Windows.Forms.TextBox();
             this.txtStudentID = new System.Windows.Forms.TextBox();
             this.txtAmountPaid = new System.Windows.Forms.TextBox();
@@ -48,15 +48,19 @@
             this.btnUpdateTransaction = new System.Windows.Forms.Button();
             this.btnDeleteTransaction = new System.Windows.Forms.Button();
             this.btnClearTransaction = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
+            this.dtToDate = new System.Windows.Forms.DateTimePicker();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTransactions)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.dtToDate);
+            this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.txtCourseID);
             this.groupBox1.Controls.Add(this.label7);
-            this.groupBox1.Controls.Add(this.dtTransactionDate);
+            this.groupBox1.Controls.Add(this.dtFromDate);
             this.groupBox1.Controls.Add(this.txtProcessedBy);
             this.groupBox1.Controls.Add(this.txtStudentID);
             this.groupBox1.Controls.Add(this.txtAmountPaid);
@@ -89,12 +93,12 @@
             this.label7.TabIndex = 12;
             this.label7.Text = "Courset ID";
             // 
-            // dtTransactionDate
+            // dtFromDate
             // 
-            this.dtTransactionDate.Location = new System.Drawing.Point(152, 175);
-            this.dtTransactionDate.Name = "dtTransactionDate";
-            this.dtTransactionDate.Size = new System.Drawing.Size(327, 22);
-            this.dtTransactionDate.TabIndex = 9;
+            this.dtFromDate.Location = new System.Drawing.Point(102, 174);
+            this.dtFromDate.Name = "dtFromDate";
+            this.dtFromDate.Size = new System.Drawing.Size(205, 22);
+            this.dtFromDate.TabIndex = 9;
             // 
             // txtProcessedBy
             // 
@@ -129,9 +133,9 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(348, 93);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(80, 16);
+            this.label5.Size = new System.Drawing.Size(83, 16);
             this.label5.TabIndex = 4;
-            this.label5.Text = "AmountPaid";
+            this.label5.Text = "Amount Paid";
             // 
             // label4
             // 
@@ -156,9 +160,9 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(23, 180);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(113, 16);
+            this.label2.Size = new System.Drawing.Size(68, 16);
             this.label2.TabIndex = 1;
-            this.label2.Text = "Transaction Date:";
+            this.label2.Text = "from Date:";
             // 
             // label1
             // 
@@ -239,6 +243,22 @@
             this.btnClearTransaction.UseVisualStyleBackColor = true;
             this.btnClearTransaction.Click += new System.EventHandler(this.btnClearTransaction_Click);
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(348, 180);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(59, 16);
+            this.label6.TabIndex = 14;
+            this.label6.Text = "To Date:";
+            // 
+            // dtToDate
+            // 
+            this.dtToDate.Location = new System.Drawing.Point(424, 174);
+            this.dtToDate.Name = "dtToDate";
+            this.dtToDate.Size = new System.Drawing.Size(205, 22);
+            this.dtToDate.TabIndex = 15;
+            // 
             // frmTransaction
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -271,7 +291,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnBack;
-        private System.Windows.Forms.DateTimePicker dtTransactionDate;
+        private System.Windows.Forms.DateTimePicker dtFromDate;
         private System.Windows.Forms.TextBox txtProcessedBy;
         private System.Windows.Forms.TextBox txtStudentID;
         private System.Windows.Forms.TextBox txtAmountPaid;
@@ -284,5 +304,7 @@
         private System.Windows.Forms.Button btnUpdateTransaction;
         private System.Windows.Forms.Button btnDeleteTransaction;
         private System.Windows.Forms.Button btnClearTransaction;
+        private System.Windows.Forms.DateTimePicker dtToDate;
+        private System.Windows.Forms.Label label6;
     }
 }

@@ -125,7 +125,7 @@ namespace ForeignLanguageCenter.BLL
         /// <summary>
         /// Tìm kiếm giao dịch theo các điều kiện.
         /// </summary>
-        public DataTable SearchTransactions( string transactionID, string studentID, string courseID, string processedBy, string amountPaid, DateTime StartDate)
+        public DataTable SearchTransactions( string transactionID, string studentID, string courseID, string processedBy, string amountPaid, DateTime StartDate, DateTime EndDate)
         {
             DataTable dt = GetAllTransactions();
 
@@ -175,10 +175,7 @@ namespace ForeignLanguageCenter.BLL
             if (filter != "")
                 filter += " AND ";
 
-            filter += string.Format(
-                "TransactionDate >= #{0:MM/dd/yyyy}# AND TransactionDate <= #{1:MM/dd/yyyy}#",
-                StartDate,
-                DateTime.Now.AddDays(1));
+            filter += string.Format( "TransactionDate >= #{0:MM/dd/yyyy}# AND TransactionDate <= #{1:MM/dd/yyyy}#", StartDate, EndDate.AddDays(1));
 
             DataView dv = dt.DefaultView;
 

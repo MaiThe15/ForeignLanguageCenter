@@ -111,7 +111,7 @@ namespace ForeignLanguageCenter.UI
             txtAmountPaid.Clear();
             txtProcessedBy.Clear();
 
-            dtTransactionDate.Value = DateTime.Now;
+            dtFromDate.Value = DateTime.Now;
 
             txtTransactionID.Focus();
         }
@@ -135,9 +135,7 @@ namespace ForeignLanguageCenter.UI
             {
                 transactionManager.AddTransaction( int.Parse(txtStudentID.Text), int.Parse(txtCourseID.Text), currentUsername, decimal.Parse(txtAmountPaid.Text));
 
-                MessageBox.Show("Transaction added successfully!", "Success");
-                LoadData();
-                btnClearTransaction_Click(sender, e);
+                MessageBox.Show("Transaction added successfully!", "Success");LoadData(); btnClearTransaction_Click(sender, e);
             }
             catch (Exception ex)
             {
@@ -164,9 +162,9 @@ namespace ForeignLanguageCenter.UI
 
                     decimal amountPaid = decimal.Parse(txtAmountPaid.Text);
 
-                    DateTime transactionDate = dtTransactionDate.Value;
+                    DateTime transactionDate = dtFromDate.Value;
 
-                    tm.UpdateTransaction( id, studentID, courseID, amountPaid,currentUsername, transactionDate );
+                    tm.UpdateTransaction( id, studentID, courseID, amountPaid, currentUsername, transactionDate );
 
                     MessageBox.Show( "Transaction updated successfully!", "Success");
 
@@ -228,7 +226,7 @@ namespace ForeignLanguageCenter.UI
         private void btnSearch_Transaction_Click(object sender, EventArgs e)
         {
             dgvTransactions.DataSource =
-                transactionManager.SearchTransactions( txtTransactionID.Text, txtStudentID.Text, txtCourseID.Text, txtProcessedBy.Text, txtAmountPaid.Text, dtTransactionDate.Value.Date);
+                transactionManager.SearchTransactions( txtTransactionID.Text, txtStudentID.Text, txtCourseID.Text, txtProcessedBy.Text, txtAmountPaid.Text, dtFromDate.Value.Date, dtToDate.Value.Date);
         }
     }
 }
