@@ -20,12 +20,13 @@ namespace ForeignLanguageCenter
 
         // Phần phân quyền sẽ được thêm vào đây
         private string currentUserRole; // Biến lưu trữ quyền của người đang đăng nhập
-       
+        private string currentUsername;
 
         // Sửa hàm tạo (Constructor) để nhận biến role
-        public MainForm(string role)
+        public MainForm(string username, string role)
         {
             InitializeComponent();
+            currentUsername = username;
             currentUserRole = role;
             studentManager = new StudentManager();
         }
@@ -56,7 +57,7 @@ namespace ForeignLanguageCenter
 
         private void courseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            CourseManagerment fCourse = new CourseManagerment(currentUserRole);
+            CourseManagerment fCourse = new CourseManagerment(currentUsername, currentUserRole);
             fCourse.ShowDialog(); // ✅ tương tự
         }
 
@@ -70,7 +71,7 @@ namespace ForeignLanguageCenter
 
         private void tranSactionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmTransaction frmTransaction = new frmTransaction();
+            frmTransaction frmTransaction = new frmTransaction(currentUsername);
             frmTransaction.ShowDialog();
         }
 

@@ -118,6 +118,20 @@ namespace ForeignLanguageCenter.BLL
 
             return dv.ToTable();
         }
+        public bool IsStudentExist(int studentID)
+        {
+            using (SqlConnection conn = db.GetConnection())
+            {
+                string sql = "SELECT COUNT(*) FROM Students WHERE StudentID = @ID";
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@ID", studentID);
+
+                conn.Open();
+                int count = (int)cmd.ExecuteScalar();
+
+                return count > 0;
+            }
+        }
 
     }
 }

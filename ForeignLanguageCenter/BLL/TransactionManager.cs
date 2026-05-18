@@ -1,11 +1,11 @@
-﻿    using System;
-    using System.Collections.Generic;
-    using System.Data;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using ForeignLanguageCenter.DAL;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using ForeignLanguageCenter.DAL;
 
 namespace ForeignLanguageCenter.BLL
     {
@@ -27,16 +27,22 @@ namespace ForeignLanguageCenter.BLL
             return db.ExecuteQuery(query);
         }
 
-        public int AddTransaction(
-    int studentID,
-    int courseID,
-    string processedBy,
-    decimal amountPaid)
+        public int AddTransaction(int studentID, int courseID, string processedBy, decimal amountPaid)
         {
+            StudentManager st = new StudentManager();
+            CourseManager cm = new CourseManager();
+            if (st.IsStudentExist(studentID) == false)
+            {
+                throw new Exception("Student not found.");
+            }
+            if (cm.IsCourseExist(courseID) == false)
+            {
+                throw new Exception("Course not found.");
+            }
+
             using (SqlConnection conn = db.GetConnection())
             {
-                string sql = @"
-            INSERT INTO Transactions ( StudentID, CourseID, TransactionDate, ProcessedBy, AmountPaid) VALUES ( @StudentID, @CourseID, GETDATE(),  @ProcessedBy,  @AmountPaid); SELECT SCOPE_IDENTITY();";
+                string sql = @"INSERT INTO Transactions ( StudentID, CourseID, TransactionDate, ProcessedBy, AmountPaid) VALUES ( @StudentID, @CourseID, GETDATE(),  @ProcessedBy,  @AmountPaid); SELECT SCOPE_IDENTITY();";
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
 
@@ -54,7 +60,51 @@ namespace ForeignLanguageCenter.BLL
             }
         }
 
-        public DataTable SearchTransactions(string transactionID, string studentID, string courseID, string processedBy, string amountPaid , DateTime fromDate, DateTime toDate)
+        public void UpdateTransaction(int transactionID, int studentID, int courseID, decimal amountPaid, string processedBy, DateTime transactionDate)
+        {   
+            StudentManager st = new StudentManager();
+             CourseManager cm = new CourseManager();
+            if (st.IsStudentExist(studentID) == false)
+            {
+                throw new Exception("Student not found.");
+            }
+             if (cm.IsCourseExist(courseID) == false)
+            {
+                throw new Exception("Course not found.");
+            }
+            using (SqlConnection conn = db.GetConnection())
+            {
+                string sql = @"UPDATE Transactions SET  StudentID = @StudentID, CourseID = @CourseID, AmountPaid = @AmountPaid, ProcessedBy = @ProcessedBy, TransactionDate = @TransactionDate WHERE TransactionID = @TransactionID";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+
+                cmd.Parameters.AddWithValue("@TransactionID", transactionID);
+                cmd.Parameters.AddWithValue("@StudentID", studentID);
+                cmd.Parameters.AddWithValue("@CourseID", courseID);
+                cmd.Parameters.AddWithValue("@AmountPaid", amountPaid);
+                cmd.Parameters.AddWithValue("@ProcessedBy", processedBy);
+                cmd.Parameters.AddWithValue("@TransactionDate", transactionDate);
+
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public void DeleteTransaction(int transactionID)
+        {
+            using (SqlConnection conn = db.GetConnection())
+            {
+                string sql = "DELETE FROM Transactions WHERE TransactionID = @ID";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@ID", transactionID);
+
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public DataTable SearchTransactions(string transactionID, string studentID, string courseID, string processedBy, string amountPaid , DateTime StartDate)
         {
             DataTable dt = GetAllTransactions();
 
@@ -105,12 +155,11 @@ namespace ForeignLanguageCenter.BLL
                 filter += $"AmountPaid = {amount}";
             }
 
-            // From Date -> To Date
             if (filter != "")
                 filter += " AND ";
 
             filter += string.Format(
-                "TransactionDate >= #{0:MM/dd/yyyy}# AND TransactionDate <= #{1:MM/dd/yyyy}#", fromDate, toDate.AddDays(1));
+                "TransactionDate >= #{0:MM/dd/yyyy}# AND TransactionDate <= #{1:MM/dd/yyyy}#", StartDate,DateTime.Now.AddDays(1));
 
             DataView dv = dt.DefaultView;
 

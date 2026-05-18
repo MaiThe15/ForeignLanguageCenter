@@ -43,7 +43,7 @@ namespace ForeignLanguageCenter.UI
                 MessageBox.Show($"Login success! Welcome {acc.Username} ({acc.Role})", "Announcement", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 // Truyền quyền (Role) sang MainForm
-                MainForm main = new MainForm(acc.Role);
+                MainForm main = new MainForm(acc.Username, acc.Role);
                 this.Hide(); // Ẩn form đăng nhập
                 main.ShowDialog(); // Hiển thị form chính
                 this.Close(); // Đóng hẳn ứng dụng khi form chính đóng

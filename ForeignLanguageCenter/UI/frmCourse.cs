@@ -10,15 +10,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.VisualBasic;
+
 namespace ForeignLanguageCenter.Models
 {
     public partial class CourseManagerment : Form
     {
         CourseManager courseBLL = new CourseManager();
         private string currentUserRole;
-        public CourseManagerment(string role)
+        private string currentUsername;
+        public CourseManagerment(string username, string role)
         {
             InitializeComponent();
+            currentUsername = username;
             currentUserRole = role;
         }
 
@@ -193,32 +197,59 @@ namespace ForeignLanguageCenter.Models
                 {
                     dgvCourseCart.Rows.Remove(dgvCourseCart.CurrentRow);
                 }
-        }
+            }
             catch
             {
                 MessageBox.Show("Select the course you want to delete.");
             }
 
-}
+        }
         private void Payment_Click(object sender, EventArgs e)
         {
             decimal total = 0;
 
             foreach (DataGridViewRow row in dgvCourseCart.Rows)
             {
-                total += Convert.ToDecimal(row.Cells["TuitionFee"].Value);
+                if (row.Cells["TuitionFee"].Value != null)
+                {
+                    total += Convert.ToDecimal(row.Cells["TuitionFee"].Value);
+                }
             }
 
-            DialogResult result = MessageBox.Show( "Total payment: " + total.ToString("N0") + " VND\n\nDo you want to continue?", "Payment Confirmation",  MessageBoxButtons.YesNo, MessageBoxIcon.Question );
+            // Nhập StudentID
+            string input = Interaction.InputBox( "Enter Student ID:", "Student Information","");
+
+            // Kiểm tra nhập rỗng
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                MessageBox.Show( "Student ID is required!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Kiểm tra kiểu số
+            if (!int.TryParse(input, out int studentID))
+            {
+                MessageBox.Show( "Student ID must be a number!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error );
+                return;
+            }
+
+            StudentManager st = new StudentManager();
+            if(!st.IsStudentExist(studentID))
+            {
+                MessageBox.Show( "Student not found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error );
+                return;
+            }
+
+            DialogResult result = MessageBox.Show( "Total payment: " + total.ToString("N0") + " VND\n\nDo you want to continue?", "Payment Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question );
 
             if (result == DialogResult.Yes)
             {
                 try
                 {
                     TransactionManager tm = new TransactionManager();
+                    Account am = new Account();
 
-                    int studentID = 1;
-                    string processedBy = "admin";
+                    string processedBy = currentUsername;
 
                     foreach (DataGridViewRow row in dgvCourseCart.Rows)
                     {
@@ -230,22 +261,17 @@ namespace ForeignLanguageCenter.Models
                             decimal amountPaid =
                                 Convert.ToDecimal(row.Cells["TuitionFee"].Value);
 
-                            tm.AddTransaction(
-                                studentID,
-                                courseID,
-                                processedBy,
-                                amountPaid
-                            );
+                            tm.AddTransaction( studentID, courseID, processedBy, amountPaid );
                         }
                     }
 
-                    MessageBox.Show("Payment successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information );
+                    MessageBox.Show( "Payment successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     dgvCourseCart.Rows.Clear();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK,  MessageBoxIcon.Error);
+                    MessageBox.Show( "Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error );
                 }
             }
         }

@@ -94,5 +94,19 @@ namespace ForeignLanguageCenter.BLL
 
             return dv.ToTable();
         }
+        public bool IsCourseExist(int courseID)
+        {
+            using (SqlConnection conn = db.GetConnection())
+            {
+                string sql = "SELECT COUNT(*) FROM Courses WHERE CourseID = @ID";
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@ID", courseID);
+       
+                conn.Open();
+                int count = (int)cmd.ExecuteScalar();
+
+                return count > 0;
+            }
+        }
     }
 }
