@@ -16,9 +16,19 @@ namespace ForeignLanguageCenter.Models
 
     {
         StudentManager studentBLL = new StudentManager();
-        public frmStudent()
+        private string currentUserRole;
+        public frmStudent(string role)
         {
             InitializeComponent();
+            currentUserRole = role;
+        }
+
+        private void ApplyAuthorization()
+        {
+            if (currentUserRole == "User")
+            {
+                btnDelete.Visible = false;
+            }
         }
 
         private void btnBack_Click(object sender, EventArgs e)
@@ -50,6 +60,7 @@ namespace ForeignLanguageCenter.Models
         private void frmStudent_Load(object sender, EventArgs e)
         {
             LoadData();
+            ApplyAuthorization();
         }
         private bool IsValidInput()
         {

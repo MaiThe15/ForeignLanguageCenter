@@ -15,9 +15,19 @@ namespace ForeignLanguageCenter.Models
     public partial class CourseManagerment : Form
     {
         CourseManager courseBLL = new CourseManager();
-        public CourseManagerment()
+        private string currentUserRole;
+        public CourseManagerment(string role)
         {
             InitializeComponent();
+            currentUserRole = role;
+        }
+
+        private void ApplyAuthorization()
+        {
+            if (currentUserRole == "User")
+            {
+                btnDelete.Visible = false;
+            }
         }
 
         private void frmCourse_Load(object sender, EventArgs e)
@@ -27,6 +37,7 @@ namespace ForeignLanguageCenter.Models
             dgvCourseCart.Columns.Add("CourseID", "Course ID");
             dgvCourseCart.Columns.Add("CourseName", "Course Name");
             dgvCourseCart.Columns.Add("TuitionFee", "Tuition Fee");
+            ApplyAuthorization();
         }
         private void LoadData()
         {

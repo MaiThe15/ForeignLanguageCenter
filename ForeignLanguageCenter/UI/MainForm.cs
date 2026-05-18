@@ -35,19 +35,11 @@ namespace ForeignLanguageCenter
         {
             if (currentUserRole == "User")
             {
-                // Giả sử bạn có các control này trên form (thay bằng tên thật của bạn)
-                // Nhân viên (User) sẽ KHÔNG ĐƯỢC XÓA dữ liệu và KHÔNG ĐƯỢC XEM THỐNG KÊ
-
-                // Vô hiệu hóa nút Xóa (Nút mờ đi)
-                // btnXoaHocVien.Enabled = false; 
-                // btnXoaKhoaHoc.Enabled = false;
-
-                // Hoặc ẩn hẳn Menu Thống kê
-                // menuThongKe.Visible = false; 
+                financeToolStripMenuItem.Visible = false;
             }
             else if (currentUserRole == "Admin")
             {
-                // Admin thì có toàn quyền, không cần ẩn/khóa gì cả
+                
             }
         }
 
@@ -58,13 +50,13 @@ namespace ForeignLanguageCenter
         }
         private void studentToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmStudent fStudent = new frmStudent();
+            frmStudent fStudent = new frmStudent(currentUserRole);
             fStudent.ShowDialog(); // ✅ MainForm vẫn
         }
 
         private void courseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            CourseManagerment fCourse = new CourseManagerment();
+            CourseManagerment fCourse = new CourseManagerment(currentUserRole);
             fCourse.ShowDialog(); // ✅ tương tự
         }
 
