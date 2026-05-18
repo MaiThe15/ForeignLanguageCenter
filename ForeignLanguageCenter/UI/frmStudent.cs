@@ -64,11 +64,7 @@ namespace ForeignLanguageCenter.Models
             }
             catch (Exception ex)
             {
-                MessageBox.Show(
-                    "Error loading data: " + ex.Message,
-                    "System Error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                MessageBox.Show( "Error loading data: " + ex.Message, "System Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -87,25 +83,16 @@ namespace ForeignLanguageCenter.Models
         /// </summary>
         private bool IsValidInput()
         {
-            if (string.IsNullOrWhiteSpace(txtFullName.Text) ||
-                string.IsNullOrWhiteSpace(txtPhone.Text))
+            if (string.IsNullOrWhiteSpace(txtFullName.Text) || string.IsNullOrWhiteSpace(txtPhone.Text))
             {
-                MessageBox.Show(
-                    "Full Name and Phone Number cannot be empty!",
-                    "Validation Error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
+                MessageBox.Show( "Full Name and Phone Number cannot be empty!", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
                 return false;
             }
 
             if (!Regex.IsMatch(txtPhone.Text, @"^\d{10}$"))
             {
-                MessageBox.Show(
-                    "Phone Number must be exactly 10 digits!",
-                    "Validation Error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
+                MessageBox.Show( "Phone Number must be exactly 10 digits!", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
                 txtPhone.Focus();
 
@@ -154,16 +141,9 @@ namespace ForeignLanguageCenter.Models
 
             try
             {
-                studentBLL.AddStudent(
-                    txtFullName.Text,
-                    txtPhone.Text,
-                    txtStatus.Text);
+                studentBLL.AddStudent( txtFullName.Text, txtPhone.Text, txtStatus.Text);
 
-                MessageBox.Show(
-                    "Student added successfully!",
-                    "Success",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
+                MessageBox.Show( "Student added successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 LoadData();
 
@@ -171,11 +151,7 @@ namespace ForeignLanguageCenter.Models
             }
             catch (Exception ex)
             {
-                MessageBox.Show(
-                    "Error adding student: " + ex.Message,
-                    "Database Error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                MessageBox.Show( "Error adding student: " + ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -199,11 +175,7 @@ namespace ForeignLanguageCenter.Models
                         txtPhone.Text,
                         txtStatus.Text);
 
-                    MessageBox.Show(
-                        "Student updated successfully!",
-                        "Success",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information);
+                    MessageBox.Show( "Student updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     LoadData();
 
@@ -211,20 +183,12 @@ namespace ForeignLanguageCenter.Models
                 }
                 else
                 {
-                    MessageBox.Show(
-                        "Please select a student from the list to update.",
-                        "Selection Required",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Warning);
+                    MessageBox.Show( "Please select a student from the list to update.", "Selection Required", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(
-                    "Error updating student: " + ex.Message,
-                    "Database Error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                MessageBox.Show( "Error updating student: " + ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -237,11 +201,7 @@ namespace ForeignLanguageCenter.Models
             {
                 if (dgvStudent.CurrentRow != null)
                 {
-                    DialogResult result = MessageBox.Show(
-                        "Are you sure you want to delete this student?",
-                        "Confirm Delete",
-                        MessageBoxButtons.YesNo,
-                        MessageBoxIcon.Question);
+                    DialogResult result = MessageBox.Show( "Are you sure you want to delete this student?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                     if (result == DialogResult.Yes)
                     {
@@ -250,11 +210,7 @@ namespace ForeignLanguageCenter.Models
 
                         studentBLL.DeleteStudent(id);
 
-                        MessageBox.Show(
-                            "Student deleted successfully!",
-                            "Success",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Information);
+                        MessageBox.Show( "Student deleted successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                         LoadData();
 
@@ -263,20 +219,12 @@ namespace ForeignLanguageCenter.Models
                 }
                 else
                 {
-                    MessageBox.Show(
-                        "Please select a student to delete.",
-                        "Selection Required",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Warning);
+                    MessageBox.Show( "Please select a student to delete.", "Selection Required", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(
-                    "Error deleting student: " + ex.Message,
-                    "Database Error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                MessageBox.Show( "Error deleting student: " + ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);    
             }
         }
 
@@ -285,11 +233,7 @@ namespace ForeignLanguageCenter.Models
         /// </summary>
         private void Search_Student_Click(object sender, EventArgs e)
         {
-            dgvStudent.DataSource = studentBLL.SearchStudents(
-                txtStudentID.Text,
-                txtFullName.Text,
-                txtPhone.Text,
-                txtStatus.Text);
+            dgvStudent.DataSource = studentBLL.SearchStudents( txtStudentID.Text, txtFullName.Text, txtPhone.Text, txtStatus.Text);
         }
     }
 }

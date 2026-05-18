@@ -26,14 +26,7 @@ namespace ForeignLanguageCenter.BLL
         /// </summary>
         public DataTable GetAllTransactions()
         {
-            string query = @"
-                SELECT TransactionID AS [TransactionID],
-                       StudentID AS [StudentID],
-                       CourseID AS [CourseID],
-                       TransactionDate AS [TransactionDate],
-                       ProcessedBy AS [ProcessedBy],
-                       AmountPaid AS [AmountPaid]
-                FROM Transactions";
+            string query = @"SELECT TransactionID AS [TransactionID], StudentID AS [StudentID], CourseID AS [CourseID], TransactionDate AS [TransactionDate], ProcessedBy AS [ProcessedBy], AmountPaid AS [AmountPaid] FROM Transactions";
 
             return db.ExecuteQuery(query);
         }
@@ -58,13 +51,7 @@ namespace ForeignLanguageCenter.BLL
 
             using (SqlConnection conn = db.GetConnection())
             {
-                string sql = @"
-                    INSERT INTO Transactions
-                    (StudentID, CourseID, TransactionDate, ProcessedBy, AmountPaid)
-                    VALUES
-                    (@StudentID, @CourseID, GETDATE(), @ProcessedBy, @AmountPaid);
-
-                    SELECT SCOPE_IDENTITY();";
+                string sql = @"INSERT INTO Transactions(StudentID, CourseID, TransactionDate, ProcessedBy, AmountPaid) VALUES (@StudentID, @CourseID, GETDATE(), @ProcessedBy, @AmountPaid); SELECT SCOPE_IDENTITY();";
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
 
@@ -101,14 +88,7 @@ namespace ForeignLanguageCenter.BLL
 
             using (SqlConnection conn = db.GetConnection())
             {
-                string sql = @"
-                    UPDATE Transactions
-                    SET StudentID = @StudentID,
-                        CourseID = @CourseID,
-                        AmountPaid = @AmountPaid,
-                        ProcessedBy = @ProcessedBy,
-                        TransactionDate = @TransactionDate
-                    WHERE TransactionID = @TransactionID";
+                string sql = @" UPDATE Transactions SET StudentID = @StudentID, CourseID = @CourseID, AmountPaid = @AmountPaid, ProcessedBy = @ProcessedBy, TransactionDate = @TransactionDate WHERE TransactionID = @TransactionID";
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
 
@@ -145,13 +125,7 @@ namespace ForeignLanguageCenter.BLL
         /// <summary>
         /// Tìm kiếm giao dịch theo các điều kiện.
         /// </summary>
-        public DataTable SearchTransactions(
-            string transactionID,
-            string studentID,
-            string courseID,
-            string processedBy,
-            string amountPaid,
-            DateTime StartDate)
+        public DataTable SearchTransactions( string transactionID, string studentID, string courseID, string processedBy, string amountPaid, DateTime StartDate)
         {
             DataTable dt = GetAllTransactions();
 

@@ -38,9 +38,7 @@ namespace ForeignLanguageCenter.UI
         {
             DataTable dt = new DataTable();
 
-            string query = @"
-                SELECT c.CourseName AS [Course Name],
-                       COUNT(t.TransactionID) AS [Total Students]
+            string query = @" SELECT c.CourseName AS [Course Name], COUNT(t.TransactionID) AS [Total Students]
                 FROM Courses c
                 LEFT JOIN Transactions t
                     ON c.CourseID = t.CourseID
@@ -81,11 +79,7 @@ namespace ForeignLanguageCenter.UI
             }
             catch (Exception ex)
             {
-                MessageBox.Show(
-                    "Database connection error: " + ex.Message,
-                    "QA System Error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                MessageBox.Show( "Database connection error: " + ex.Message, "QA System Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -94,9 +88,7 @@ namespace ForeignLanguageCenter.UI
         /// </summary>
         private void btnExportExcel_Click(object sender, EventArgs e)
         {
-            ExcelExporter.ExportDataGridViewToExcel(
-                dgvFinance,
-                "Course_Registration_Statistics_Report");
+            ExcelExporter.ExportDataGridViewToExcel( dgvFinance, "Course_Registration_Statistics_Report");
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)

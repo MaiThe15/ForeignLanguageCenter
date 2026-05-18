@@ -70,9 +70,7 @@ namespace ForeignLanguageCenter
         /// </summary>
         private void courseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            CourseManagerment fCourse =
-                new CourseManagerment(currentUsername, currentUserRole);
-
+            CourseManagerment fCourse = new CourseManagerment(currentUsername, currentUserRole);
             CourseManagerment Course = new CourseManagerment(currentUsername, currentUserRole);
             fCourse.ShowDialog();
         }
@@ -108,8 +106,7 @@ namespace ForeignLanguageCenter
         {
             UI.frmFinance financeForm = new UI.frmFinance();
 
-            financeForm.StartPosition =
-                FormStartPosition.CenterScreen;
+            financeForm.StartPosition = FormStartPosition.CenterScreen;
 
             financeForm.Show();
         }

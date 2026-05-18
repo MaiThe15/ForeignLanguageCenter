@@ -37,12 +37,7 @@ namespace ForeignLanguageCenter.UI
             if (string.IsNullOrEmpty(user) ||
                 string.IsNullOrEmpty(pass))
             {
-                MessageBox.Show(
-                    "Please fill Username and Password!",
-                    "Warning",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
-
+                MessageBox.Show( "Please fill Username and Password!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -52,15 +47,9 @@ namespace ForeignLanguageCenter.UI
 
             if (acc != null)
             {
-                MessageBox.Show(
-                    $"Login success! Welcome {acc.Username} ({acc.Role})",
-                    "Announcement",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
+                MessageBox.Show($"Login success! Welcome {acc.Username} ({acc.Role})", "Announcement", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                MainForm main = new MainForm(
-                    acc.Username,
-                    acc.Role);
+                MainForm main = new MainForm(acc.Username, acc.Role);
 
                 this.Hide();
 
@@ -70,11 +59,7 @@ namespace ForeignLanguageCenter.UI
             }
             else
             {
-                MessageBox.Show(
-                    "Incorrect email or password!",
-                    "Error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                MessageBox.Show( "Incorrect email or password!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

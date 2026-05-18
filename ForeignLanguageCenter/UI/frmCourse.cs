@@ -89,7 +89,6 @@ namespace ForeignLanguageCenter.Models
 
                 return false;
             }
-
             return true;
         }
 
@@ -102,9 +101,7 @@ namespace ForeignLanguageCenter.Models
 
             try
             {
-                courseBLL.AddCourse(
-                    txtCourseName.Text,
-                    decimal.Parse(txtTuitionFee.Text));
+                courseBLL.AddCourse( txtCourseName.Text, decimal.Parse(txtTuitionFee.Text));
 
                 MessageBox.Show("Course added successfully!", "Success");
 
@@ -129,13 +126,9 @@ namespace ForeignLanguageCenter.Models
             {
                 if (dgvCourse.CurrentRow != null)
                 {
-                    int id = Convert.ToInt32(
-                        dgvCourse.CurrentRow.Cells["CourseID"].Value);
+                    int id = Convert.ToInt32( dgvCourse.CurrentRow.Cells["CourseID"].Value);
 
-                    courseBLL.UpdateCourse(
-                        id,
-                        txtCourseName.Text,
-                        decimal.Parse(txtTuitionFee.Text));
+                    courseBLL.UpdateCourse( id, txtCourseName.Text, decimal.Parse(txtTuitionFee.Text));
 
                     MessageBox.Show("Course updated successfully!", "Success");
 
@@ -159,18 +152,12 @@ namespace ForeignLanguageCenter.Models
             {
                 if (dgvCourse.CurrentRow != null)
                 {
-                    DialogResult result = MessageBox.Show(
-                        "Delete this course?",
-                        "Confirm",
-                        MessageBoxButtons.YesNo);
+                    DialogResult result = MessageBox.Show( "Delete this course?", "Confirm", MessageBoxButtons.YesNo);
 
                     if (result == DialogResult.Yes)
                     {
-                        int id = Convert.ToInt32(
-                            dgvCourse.CurrentRow.Cells["CourseID"].Value);
-
+                        int id = Convert.ToInt32( dgvCourse.CurrentRow.Cells["CourseID"].Value);
                         courseBLL.DeleteCourse(id);
-
                         LoadData();
 
                         btnClear_Click(sender, e);
@@ -191,7 +178,6 @@ namespace ForeignLanguageCenter.Models
             txtCourseID.Clear();
             txtCourseName.Clear();
             txtTuitionFee.Clear();
-
             txtCourseName.Focus();
         }
 
@@ -242,10 +228,7 @@ namespace ForeignLanguageCenter.Models
         /// </summary>
         private void Search_Course_Click(object sender, EventArgs e)
         {
-            dgvCourse.DataSource = courseBLL.SearchCourses(
-                txtCourseID.Text,
-                txtCourseName.Text,
-                txtTuitionFee.Text);
+            dgvCourse.DataSource = courseBLL.SearchCourses( txtCourseID.Text, txtCourseName.Text, txtTuitionFee.Text);
         }
 
         /// <summary>
@@ -259,19 +242,15 @@ namespace ForeignLanguageCenter.Models
                 return;
             }
 
-            int courseID = Convert.ToInt32(
-                dgvCourse.CurrentRow.Cells["CourseID"].Value);
+            int courseID = Convert.ToInt32(dgvCourse.CurrentRow.Cells["CourseID"].Value);
 
-            string courseName =
-                dgvCourse.CurrentRow.Cells["CourseName"].Value.ToString();
+            string courseName = dgvCourse.CurrentRow.Cells["CourseName"].Value.ToString();
 
-            decimal tuitionFee = Convert.ToDecimal(
-                dgvCourse.CurrentRow.Cells["TuitionFee"].Value);
+            decimal tuitionFee = Convert.ToDecimal( dgvCourse.CurrentRow.Cells["TuitionFee"].Value);
 
             foreach (DataGridViewRow row in dgvCourseCart.Rows)
             {
-                if (row.Cells["CourseID"].Value != null &&
-                    Convert.ToInt32(row.Cells["CourseID"].Value) == courseID)
+                if (row.Cells["CourseID"].Value != null && Convert.ToInt32(row.Cells["CourseID"].Value) == courseID)
                 {
                     MessageBox.Show("Course already added!");
                     return;
@@ -314,29 +293,18 @@ namespace ForeignLanguageCenter.Models
                 }
             }
 
-            string input = Interaction.InputBox(
-                "Enter Student ID:",
-                "Student Information",
-                "");
+            string input = Interaction.InputBox("Enter Student ID:", "Student Information", "");
 
             if (string.IsNullOrWhiteSpace(input))
             {
-                MessageBox.Show(
-                    "Student ID is required!",
-                    "Warning",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
+                MessageBox.Show( "Student ID is required!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
                 return;
             }
 
             if (!int.TryParse(input, out int studentID))
             {
-                MessageBox.Show(
-                    "Student ID must be a number!",
-                    "Error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                MessageBox.Show( "Student ID must be a number!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 return;
             }
@@ -345,21 +313,12 @@ namespace ForeignLanguageCenter.Models
 
             if (!st.IsStudentExist(studentID))
             {
-                MessageBox.Show(
-                    "Student not found!",
-                    "Error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                MessageBox.Show("Student not found!", "Error", MessageBoxButtons.OK,MessageBoxIcon.Error);
 
                 return;
             }
 
-            DialogResult result = MessageBox.Show(
-                "Total payment: " + total.ToString("N0") +
-                " VND\n\nDo you want to continue?",
-                "Payment Confirmation",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question);
+            DialogResult result = MessageBox.Show( "Total payment: " + total.ToString("N0") + " VND\n\nDo you want to continue?", "Payment Confirmation", MessageBoxButtons.YesNo);
 
             if (result == DialogResult.Yes)
             {
@@ -373,35 +332,20 @@ namespace ForeignLanguageCenter.Models
                     {
                         if (row.Cells["CourseID"].Value != null)
                         {
-                            int courseID = Convert.ToInt32(
-                                row.Cells["CourseID"].Value);
+                            int courseID = Convert.ToInt32(row.Cells["CourseID"].Value);
+                            decimal amountPaid = Convert.ToDecimal(row.Cells["TuitionFee"].Value);
 
-                            decimal amountPaid = Convert.ToDecimal(
-                                row.Cells["TuitionFee"].Value);
-
-                            tm.AddTransaction(
-                                studentID,
-                                courseID,
-                                processedBy,
-                                amountPaid);
+                            tm.AddTransaction( studentID, courseID, processedBy, amountPaid);
                         }
                     }
 
-                    MessageBox.Show(
-                        "Payment successful!",
-                        "Success",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information);
+                    MessageBox.Show( "Payment successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     dgvCourseCart.Rows.Clear();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(
-                        "Error: " + ex.Message,
-                        "Error",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
+                    MessageBox.Show( "Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

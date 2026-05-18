@@ -44,8 +44,7 @@ namespace ForeignLanguageCenter.UI
         /// </summary>
         private void frmTransaction_Load(object sender, EventArgs e)
         {
-            dgvTransactions.DataSource =
-                transactionManager.GetAllTransactions();
+            dgvTransactions.DataSource = transactionManager.GetAllTransactions();
             dgvTransactions.DataSource = transactionManager.GetAllTransactions();
             ApplyAuthorization();
         }
@@ -57,38 +56,21 @@ namespace ForeignLanguageCenter.UI
         {
             if (string.IsNullOrWhiteSpace(txtStudentID.Text))
             {
-                MessageBox.Show(
-                    "Student ID cannot be empty!",
-                    "Validation Error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
-
+                MessageBox.Show("Student ID cannot be empty!", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtStudentID.Focus();
-
                 return false;
             }
 
             if (!int.TryParse(txtStudentID.Text, out int studentID))
             {
-                MessageBox.Show(
-                    "Student ID must be a number!",
-                    "Validation Error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
-
+                MessageBox.Show( "Student ID must be a number!", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtStudentID.Focus();
-
                 return false;
             }
 
             if (string.IsNullOrWhiteSpace(txtCourseID.Text))
             {
-                MessageBox.Show(
-                    "Course ID cannot be empty!",
-                    "Validation Error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
-
+                MessageBox.Show( "Course ID cannot be empty!", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtCourseID.Focus();
 
                 return false;
@@ -96,40 +78,22 @@ namespace ForeignLanguageCenter.UI
 
             if (!int.TryParse(txtCourseID.Text, out int courseID))
             {
-                MessageBox.Show(
-                    "Course ID must be a number!",
-                    "Validation Error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
-
+                MessageBox.Show("Course ID must be a number!", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtCourseID.Focus();
-
                 return false;
             }
 
             if (string.IsNullOrWhiteSpace(txtAmountPaid.Text))
             {
-                MessageBox.Show(
-                    "Amount Paid cannot be empty!",
-                    "Validation Error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
-
+                MessageBox.Show( "Amount Paid cannot be empty!", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtAmountPaid.Focus();
-
                 return false;
             }
 
             if (!decimal.TryParse(txtAmountPaid.Text, out decimal amount))
             {
-                MessageBox.Show(
-                    "Amount Paid must be a valid number!",
-                    "Validation Error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
-
+                MessageBox.Show( "Amount Paid must be a valid number!", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtAmountPaid.Focus();
-
                 return false;
             }
 
@@ -157,8 +121,7 @@ namespace ForeignLanguageCenter.UI
         /// </summary>
         private void LoadData()
         {
-            dgvTransactions.DataSource =
-                transactionManager.GetAllTransactions();
+            dgvTransactions.DataSource = transactionManager.GetAllTransactions();
         }
 
         /// <summary>
@@ -170,18 +133,10 @@ namespace ForeignLanguageCenter.UI
 
             try
             {
-                transactionManager.AddTransaction(
-                    int.Parse(txtStudentID.Text),
-                    int.Parse(txtCourseID.Text),
-                    currentUsername,
-                    decimal.Parse(txtAmountPaid.Text));
+                transactionManager.AddTransaction( int.Parse(txtStudentID.Text), int.Parse(txtCourseID.Text), currentUsername, decimal.Parse(txtAmountPaid.Text));
 
-                MessageBox.Show(
-                    "Transaction added successfully!",
-                    "Success");
-
+                MessageBox.Show("Transaction added successfully!", "Success");
                 LoadData();
-
                 btnClearTransaction_Click(sender, e);
             }
             catch (Exception ex)
@@ -201,31 +156,19 @@ namespace ForeignLanguageCenter.UI
             {
                 if (dgvTransactions.CurrentRow != null)
                 {
-                    int id = Convert.ToInt32(
-                        dgvTransactions.CurrentRow.Cells["TransactionID"].Value);
+                    int id = Convert.ToInt32( dgvTransactions.CurrentRow.Cells["TransactionID"].Value);
 
                     int studentID = int.Parse(txtStudentID.Text);
 
                     int courseID = int.Parse(txtCourseID.Text);
 
-                    decimal amountPaid =
-                        decimal.Parse(txtAmountPaid.Text);
+                    decimal amountPaid = decimal.Parse(txtAmountPaid.Text);
 
-                    DateTime transactionDate =
-                        dtTransactionDate.Value;
+                    DateTime transactionDate = dtTransactionDate.Value;
 
-                    tm.UpdateTransaction(
-                        id,
-                        studentID,
-                        courseID,
-                        amountPaid,
-                        currentUsername,
-                        transactionDate
-                    );
+                    tm.UpdateTransaction( id, studentID, courseID, amountPaid,currentUsername, transactionDate );
 
-                    MessageBox.Show(
-                        "Transaction updated successfully!",
-                        "Success");
+                    MessageBox.Show( "Transaction updated successfully!", "Success");
 
                     LoadData();
 
@@ -247,23 +190,13 @@ namespace ForeignLanguageCenter.UI
             {
                 if (dgvTransactions.CurrentRow != null)
                 {
-                    DialogResult result = MessageBox.Show(
-                        "Delete this transaction?",
-                        "Confirm",
-                        MessageBoxButtons.YesNo,
-                        MessageBoxIcon.Question
-                    );
+                    DialogResult result = MessageBox.Show( "Delete this transaction?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question );
 
                     if (result == DialogResult.Yes)
                     {
-                        int id = Convert.ToInt32(
-                            dgvTransactions.CurrentRow.Cells["TransactionID"].Value
-                        );
-
+                        int id = Convert.ToInt32( dgvTransactions.CurrentRow.Cells["TransactionID"].Value );
                         tm.DeleteTransaction(id);
-
                         LoadData();
-
                         btnClearTransaction_Click(sender, e);
                     }
                 }
@@ -295,13 +228,7 @@ namespace ForeignLanguageCenter.UI
         private void btnSearch_Transaction_Click(object sender, EventArgs e)
         {
             dgvTransactions.DataSource =
-                transactionManager.SearchTransactions(
-                    txtTransactionID.Text,
-                    txtStudentID.Text,
-                    txtCourseID.Text,
-                    txtProcessedBy.Text,
-                    txtAmountPaid.Text,
-                    dtTransactionDate.Value.Date);
+                transactionManager.SearchTransactions( txtTransactionID.Text, txtStudentID.Text, txtCourseID.Text, txtProcessedBy.Text, txtAmountPaid.Text, dtTransactionDate.Value.Date);
         }
     }
 }
