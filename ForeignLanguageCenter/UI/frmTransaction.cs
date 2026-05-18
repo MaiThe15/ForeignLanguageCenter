@@ -28,7 +28,6 @@ namespace ForeignLanguageCenter.UI
         public frmTransaction(string username, string role)
         {
             InitializeComponent();
-
             currentUsername = username;
             currentUserRole = role;
         }
@@ -45,13 +44,10 @@ namespace ForeignLanguageCenter.UI
         /// </summary>
         private void frmTransaction_Load(object sender, EventArgs e)
         {
-<<<<<<< HEAD
             dgvTransactions.DataSource =
                 transactionManager.GetAllTransactions();
-=======
             dgvTransactions.DataSource = transactionManager.GetAllTransactions();
             ApplyAuthorization();
->>>>>>> 137b56307e2e723a7b1b7033a8c35d7543943b0f
         }
 
         /// <summary>
